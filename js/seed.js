@@ -1,4 +1,4 @@
-// Başlangıç kataloğu. Fotoğraflar Unsplash'ten (ücretsiz, ticari kullanıma açık).
+// Başlangıç kataloğu. Ürün fotoğrafları assets/urunler/ içinde (Lalezar Instagram'dan).
 // Gerçek ürün fotoğrafları çekilince admin panelinden değiştirilir.
 window.LALEZAR_SEED = {
  "categories": {
@@ -156,354 +156,104 @@ window.LALEZAR_SEED = {
    "description": "Lalezar logolu siyah kadife kutuda, siyah kurdeleyle tamamlanan kırmızı güller. Sevgiliye klasik ve şık bir jest."
   },
   {
-   "id": "p01",
-   "name": "Bağdat Buketi",
-   "type": "buket",
+   "id": "lz06",
+   "name": "Altın Vazoda Sarı Orkideli Aranjman",
+   "type": "vazoda-aranjman",
    "occasions": [
-    "dogum-gunu",
-    "sevgiliye",
+    "acilis",
+    "yeni-is",
     "tesekkur"
    ],
-   "price": 2450,
+   "price": 0,
    "oldPrice": 0,
    "featured": true,
    "active": true,
-   "image": "https://images.unsplash.com/photo-1523693916903-027d144a2b7d?auto=format&fit=crop&w=900&h=900&q=75",
+   "image": "assets/urunler/altin-vazoda-turuncu-orkideli-aranjman.jpg",
    "art": [
-    "#F28C28",
-    "#FFFFFF"
+    "#E8850A",
+    "#F2C200"
    ],
-   "description": "Pembe ve beyaz güllerin okaliptüs dallarıyla buluştuğu, kâğıda sarılı klasik bir buket."
+   "description": "Altın dokulu vazoda sarı simbidyum orkideler, turuncu krizantem ve güller, altın yelpaze yapraklar ve sarkan amarantlarla hazırlanan gösterişli bir aranjman. Açılış ve tebrikler için iddialı bir hediye."
   },
   {
-   "id": "p02",
-   "name": "Pudra Rüya",
-   "type": "buket",
-   "occasions": [
-    "dogum-gunu",
-    "yeni-bebek",
-    "tesekkur"
-   ],
-   "price": 2190,
-   "oldPrice": 0,
-   "featured": true,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1523694576729-dc99e9c0f9b4?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Krem ve beyaz tonlarda, sade ve zarif bir el buketi."
-  },
-  {
-   "id": "p03",
-   "name": "Moda Sahili",
+   "id": "lz07",
+   "name": "Cam Vazoda Kırmızı Kokina",
    "type": "vazoda-aranjman",
    "occasions": [
     "tesekkur",
     "yeni-is",
-    "gecmis-olsun"
-   ],
-   "price": 3250,
-   "oldPrice": 3650,
-   "featured": true,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Cam vazoda pembe tonlu mevsim çiçekleriyle hazırlanan masa aranjmanı."
-  },
-  {
-   "id": "p04",
-   "name": "Şeftali Kuru Buket",
-   "type": "buket",
-   "occasions": [
-    "dogum-gunu",
-    "tesekkur"
-   ],
-   "price": 1890,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1622658641558-235f26dd270b?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Şeftali rengi kâğıda sarılı, uzun ömürlü kuru çiçek buketi."
-  },
-  {
-   "id": "p05",
-   "name": "21 Kırmızı Gül",
-   "type": "gul",
-   "occasions": [
-    "sevgiliye"
-   ],
-   "price": 2950,
-   "oldPrice": 0,
-   "featured": true,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Uzun saplı 21 kırmızı gülden oluşan klasik bir aşk ilanı."
-  },
-  {
-   "id": "p06",
-   "name": "Beyaz Asalet Orkide",
-   "type": "orkide",
-   "occasions": [
-    "acilis",
-    "yeni-is",
-    "gecmis-olsun"
-   ],
-   "price": 2200,
-   "oldPrice": 0,
-   "featured": true,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1583846712268-a77d97b7fd68?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "2 dallı beyaz phalaenopsis orkide. Uzun ömürlü ve bakımı kolay."
-  },
-  {
-   "id": "p07",
-   "name": "Mor Beyaz Orkide",
-   "type": "orkide",
-   "occasions": [
-    "dogum-gunu",
     "acilis"
    ],
-   "price": 3100,
+   "price": 0,
    "oldPrice": 0,
    "featured": true,
    "active": true,
-   "image": "https://images.unsplash.com/photo-1618080578815-335456280012?auto=format&fit=crop&w=900&h=900&q=75",
+   "image": "assets/urunler/cam-vazoda-kirmizi-kokina.jpg",
    "art": [
-    "#F28C28",
+    "#C8102E",
     "#FFFFFF"
    ],
-   "description": "Beyaz seramik saksıda mor ve beyaz orkideler. Ev ve ofis için şık bir hediye."
+   "description": "İçi kırmızı kokina taneleriyle dolu cam vazoda, bol ve dolgun kırmızı kokina dalları. Uzun süre dayanan, özellikle kış aylarının vazgeçilmez hediyesi."
   },
   {
-   "id": "p08",
-   "name": "Kutuda Pembe Güller",
-   "type": "kutuda-cicek",
+   "id": "lz08",
+   "name": "Fener Çiçeği Sonbahar Aranjmanı",
+   "type": "vazoda-aranjman",
+   "occasions": [
+    "tesekkur",
+    "dogum-gunu",
+    "yeni-is"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/fener-cicegi-sonbahar-aranjmani.jpg",
+   "art": [
+    "#E8850A",
+    "#C8102E"
+   ],
+   "description": "Seramik kasede turuncu fener çiçekleri, kırmızı kuşburnu, bordo antoryum, sarı dalya, turuncu güller ve kuru okaliptüsle hazırlanan sonbahar tonlarında bir aranjman."
+  },
+  {
+   "id": "lz09",
+   "name": "Beyaz Lale Buketi",
+   "type": "buket",
    "occasions": [
     "sevgiliye",
-    "dogum-gunu"
+    "tesekkur",
+    "yeni-bebek"
    ],
-   "price": 2650,
+   "price": 0,
    "oldPrice": 0,
    "featured": true,
    "active": true,
-   "image": "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=900&h=900&q=75",
+   "image": "assets/urunler/beyaz-lale-buketi.jpg",
    "art": [
-    "#F28C28",
-    "#FFFFFF"
+    "#FFFFFF",
+    "#6B8E4E"
    ],
-   "description": "Kutuda sıkı dizilmiş pembe güller. Kapağı açılınca sürpriz yapar."
+   "description": "Bembeyaz lalelerden oluşan, gri kâğıda sarılıp beyaz kurdeleyle bağlanan sade ve zarif bir buket."
   },
   {
-   "id": "p09",
-   "name": "Şakayık Bulutu",
+   "id": "lz10",
+   "name": "Gri Kutuda Lila Güller",
    "type": "kutuda-cicek",
    "occasions": [
     "sevgiliye",
     "dogum-gunu",
-    "yeni-bebek"
-   ],
-   "price": 4750,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Pembe şakayıklarla hazırlanan, sezonunda en çok sorulan tasarımımız."
-  },
-  {
-   "id": "p10",
-   "name": "Günbatımı",
-   "type": "vazoda-aranjman",
-   "occasions": [
-    "dogum-gunu",
-    "tesekkur",
     "yeni-is"
    ],
-   "price": 2390,
+   "price": 0,
    "oldPrice": 0,
-   "featured": false,
+   "featured": true,
    "active": true,
-   "image": "https://images.unsplash.com/photo-1572454591674-2739f30d8c40?auto=format&fit=crop&w=900&h=900&q=75",
+   "image": "assets/urunler/gri-kutuda-lila-guller.jpg",
    "art": [
-    "#F28C28",
+    "#C9A0C8",
     "#FFFFFF"
    ],
-   "description": "Pembe, bej ve kırmızı tonların cam vazoda buluştuğu sıcak bir aranjman."
-  },
-  {
-   "id": "p11",
-   "name": "Kırmızı Tutku",
-   "type": "buket",
-   "occasions": [
-    "sevgiliye",
-    "dogum-gunu"
-   ],
-   "price": 2750,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1589100534833-475e31a17b4e?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Kırmızı gerbera, gül ve beyaz kır çiçekleriyle canlı bir buket."
-  },
-  {
-   "id": "p12",
-   "name": "Kırmızı Masa Aranjmanı",
-   "type": "vazoda-aranjman",
-   "occasions": [
-    "yeni-is",
-    "acilis",
-    "tesekkur"
-   ],
-   "price": 3450,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Kırmızı çiçeklerle hazırlanan, masada şık duran alçak aranjman."
-  },
-  {
-   "id": "p13",
-   "name": "Fuşya Orkide",
-   "type": "orkide",
-   "occasions": [
-    "dogum-gunu",
-    "acilis"
-   ],
-   "price": 2900,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1610397648930-477b8c7f0943?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Göz alıcı fuşya-mor phalaenopsis orkide."
-  },
-  {
-   "id": "p14",
-   "name": "Beyaz Gelincikler",
-   "type": "vazoda-aranjman",
-   "occasions": [
-    "gecmis-olsun",
-    "tesekkur"
-   ],
-   "price": 1990,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1587317996237-eddd7e834d84?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Amber cam vazoda beyaz gelincikler. Minimal ve modern."
-  },
-  {
-   "id": "p15",
-   "name": "Salon Aranjmanı",
-   "type": "vazoda-aranjman",
-   "occasions": [
-    "acilis",
-    "yeni-is"
-   ],
-   "price": 4250,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Karışık mevsim çiçekleriyle hazırlanan gösterişli salon aranjmanı."
-  },
-  {
-   "id": "p16",
-   "name": "Krem Buket",
-   "type": "buket",
-   "occasions": [
-    "yeni-bebek",
-    "tesekkur",
-    "gecmis-olsun"
-   ],
-   "price": 2290,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1561848355-890d054dc55a?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Beyaz ve bej çiçeklerden sakin tonlu bir buket."
-  },
-  {
-   "id": "p17",
-   "name": "Pembe Orkide",
-   "type": "orkide",
-   "occasions": [
-    "dogum-gunu",
-    "yeni-bebek"
-   ],
-   "price": 2600,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1562133558-4a3906179c67?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Pembe tonlu phalaenopsis orkide."
-  },
-  {
-   "id": "p18",
-   "name": "Bahar Buketi",
-   "type": "buket",
-   "occasions": [
-    "dogum-gunu",
-    "gecmis-olsun",
-    "tesekkur"
-   ],
-   "price": 1790,
-   "oldPrice": 0,
-   "featured": false,
-   "active": true,
-   "image": "https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?auto=format&fit=crop&w=900&h=900&q=75",
-   "art": [
-    "#F28C28",
-    "#FFFFFF"
-   ],
-   "description": "Mevsimin çiçekleriyle hazırlanan neşeli bir el buketi."
+   "description": "Büyük gri kadife kutuda yüzlerce lila gül ve ortasında beyaz güllerle çizilen bir hat, lila saten kurdeleyle tamamlanır. Unutulmaz bir sürpriz için."
   }
  ],
  "heroSlides": [

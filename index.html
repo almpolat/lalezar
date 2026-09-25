@@ -171,9 +171,9 @@
   // Kampanya banner'ı (görseller seed'deki ürün fotoğraflarından)
   const seedImg = (id) => (LALEZAR_SEED.products.find((p) => p.id === id) || {}).image || "";
   const promos = [
-    { title: "Sevgiliye Güller", img: seedImg("p05"), link: "kategori.html?tur=gul" },
-    { title: "Orkide Koleksiyonu", img: seedImg("p06"), link: "kategori.html?tur=orkide" },
-    { title: "Doğum Günü Çiçekleri", img: seedImg("p01"), link: "kategori.html?sebep=dogum-gunu" }
+    { title: "Sevgiliye Güller", img: seedImg("lz05"), link: "kategori.html?tur=gul" },
+    { title: "Orkide Koleksiyonu", img: seedImg("lz06"), link: "kategori.html?tur=orkide" },
+    { title: "Doğum Günü Çiçekleri", img: seedImg("lz02"), link: "kategori.html?sebep=dogum-gunu" }
   ];
   document.getElementById("promos").innerHTML = promos.map((b) => `
     <a href="${b.link}" class="group relative block aspect-[4/3] overflow-hidden bg-mist">
