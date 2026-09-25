@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <title>Çiçekler | Lalezar Çiçekçilik</title>
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+  <section class="bg-mist py-14 text-center px-4">
+    <nav class="text-[12px] tracking-[.14em] uppercase text-ink/55" aria-label="Konum"><a href="index.html" class="hover:text-ink">Ana Sayfa</a> <span class="mx-2">/</span> <span id="crumb">Çiçekler</span></nav>
+    <h1 id="title" class="font-display text-5xl sm:text-6xl mt-4">Tüm Çiçekler</h1>
+    <div id="chips" class="flex gap-x-6 gap-y-2 flex-wrap justify-center mt-7 text-[13px] tracking-[.12em] uppercase"></div>
+  </section>
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-8">
+    <div class="flex items-center justify-between border-b border-line py-4 text-sm">
+      <p id="count" class="text-ink/60"></p>
+      <label class="flex items-center gap-3"><span class="text-[12px] tracking-[.14em] uppercase text-ink/60">Sırala</span>
+        <select id="sort" class="border-0 bg-transparent text-sm outline-none cursor-pointer">
+          <option value="featured">Öne çıkanlar</option>
+          <option value="price-asc">Fiyat: Düşükten yükseğe</option>
+          <option value="price-desc">Fiyat: Yüksekten düşüğe</option>
+          <option value="new">En yeniler</option>
+        </select>
+      </label>
+    </div>
+    <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12 mt-10"></div>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script>
+(async () => {
+  const { esc, param, productCard, bindAddButtons, waLink } = UI;
+  const tur = param("tur"), sebep = param("sebep"), q = (param("q") || "").trim();
+  const [products, cats] = await Promise.all([Store.listProducts(), Store.getCategories()]);
+  let list = products.filter((p) => p.active !== false);
+  let title = "Tüm Çiçekler";
+  const norm = (s) => String(s).toLocaleLowerCase("tr");
+  if (tur) { list = list.filter((p) => p.type === tur); title = (cats.types.find((c) => c.slug === tur) || {}).name || title; }
+  if (sebep) { list = list.filter((p) => (p.occasions || []).includes(sebep)); title = (cats.occasions.find((c) => c.slug === sebep) || {}).name || title; }
+  if (q) { list = list.filter((p) => norm(p.name + " " + p.description).includes(norm(q))); title = `“${q}” için sonuçlar`; }
+  document.getElementById("title").textContent = title;
+  document.getElementById("crumb").textContent = title;
+  document.title = `${title} | Lalezar Çiçekçilik`;
+
+  const chip = (href, label, on) => `<a href="${href}" class="py-1 ${on ? "border-b border-ink" : "text-ink/55 hover:text-ink"}">${esc(label)}</a>`;
+  document.getElementById("chips").innerHTML = sebep
+    ? cats.occasions.map((c) => chip(`kategori.html?sebep=${c.slug}`, c.name, sebep === c.slug)).join("")
+    : chip("kategori.html", "Tümü", !tur && !q) + cats.types.map((c) => chip(`kategori.html?tur=${c.slug}`, c.name, tur === c.slug)).join("");
+
+  const grid = document.getElementById("grid");
+  function render() {
+    const s = document.getElementById("sort").value;
+    const sorted = [...list].sort((a, b) => s === "price-asc" ? a.price - b.price : s === "price-desc" ? b.price - a.price : s === "new" ? (b.createdAt || 0) - (a.createdAt || 0) : (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    document.getElementById("count").textContent = `${sorted.length} ürün`;
+    grid.innerHTML = sorted.length ? sorted.map(productCard).join("") :
+      `<div class="col-span-full text-center py-16"><p class="font-display text-3xl">Bu seçimde şu an ürün bulunmuyor.</p><p class="text-ink/60 mt-3">Aradığınız tasarımı WhatsApp'tan sorabilirsiniz, sizin için hazırlayalım.</p><div class="mt-8 flex flex-wrap gap-3 justify-center"><a href="kategori.html" class="btn btn-dark">Tüm Çiçekler</a><a href="${waLink("Merhaba, " + (q || title) + " için bir tasarım istiyorum.")}" target="_blank" rel="noopener" class="btn btn-outline">WhatsApp'tan Sor</a></div></div>`;
+    bindAddButtons(grid, sorted);
+  }
+  document.getElementById("sort").addEventListener("change", render);
+  render();
+})();
+</script>
+</body>
+</html>

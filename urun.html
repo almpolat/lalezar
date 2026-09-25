@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <title>Ürün | Lalezar Çiçekçilik</title>
+</head>
+<body>
+<div id="site-header"></div>
+<main id="main" class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-8"></main>
+<div id="site-footer"></div>
+<script>
+(async () => {
+  const { esc, money, param, productImage, productCard, bindAddButtons, Cart, waLink } = UI;
+  const D = LALEZAR_CONFIG.delivery;
+  const main = document.getElementById("main");
+  const [p, products, cats] = await Promise.all([Store.getProduct(param("id")), Store.listProducts(), Store.getCategories()]);
+  if (!p || p.active === false) {
+    main.innerHTML = `<div class="text-center py-24"><h1 class="font-display text-4xl">Bu ürün artık satışta değil.</h1><a href="kategori.html" class="btn btn-dark mt-8">Tüm Çiçekler</a></div>`;
+    return;
+  }
+  document.title = `${p.name} | Lalezar Çiçekçilik`;
+  const type = cats.types.find((c) => c.slug === p.type);
+  const sale = p.oldPrice && p.oldPrice > p.price;
+  const acc = (t, body, open) => `<details class="border-b border-line py-5" ${open ? "open" : ""}><summary class="flex justify-between items-center text-[13px] tracking-[.14em] uppercase">${t}<span class="plus text-xl">+</span></summary><div class="mt-4 text-[15px] leading-relaxed text-ink/75">${body}</div></details>`;
+
+  main.innerHTML = `
+    <nav class="text-[12px] tracking-[.12em] uppercase text-ink/55 mb-8" aria-label="Konum"><a href="index.html" class="hover:text-ink">Ana Sayfa</a><span class="mx-2">/</span>${type ? `<a href="kategori.html?tur=${type.slug}" class="hover:text-ink">${esc(type.name)}</a><span class="mx-2">/</span>` : ""}<span class="text-ink">${esc(p.name)}</span></nav>
+    <div class="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-start">
+      <div class="aspect-square overflow-hidden bg-mist">${productImage(p)}</div>
+      <div class="lg:sticky lg:top-40">
+        <h1 class="font-display text-4xl sm:text-5xl leading-tight">${esc(p.name)}</h1>
+        <p class="mt-4 text-xl">${sale ? `<s class="text-ink/45 mr-3">${money(p.oldPrice)}</s>` : ""}<span class="${sale ? "text-orange" : ""}">${money(p.price)}</span></p>
+        <p class="text-[13px] text-ink/55 mt-1">Vergiler dahildir.</p>
+        <div class="mt-7 bg-mist px-5 py-4 text-[14px] flex gap-3 items-start">
+          <svg class="shrink-0 mt-0.5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+          <div><p>${esc(D.headline)}${D.cutoff ? ` — ${esc(D.cutoff)}'e kadar verilen siparişlerde` : ""}</p><p class="text-ink/60">Teslimat saatini sipariş sırasında seçebilirsiniz.</p></div>
+        </div>
+        <p class="label mt-8">Adet</p>
+        <div class="flex gap-3">
+          <div class="flex items-center border border-ink/30 h-[54px]">
+            <button id="minus" class="w-12 h-full text-lg" aria-label="Azalt">−</button>
+            <input id="qty" type="number" min="1" value="1" class="w-10 text-center bg-transparent outline-none" aria-label="Adet">
+            <button id="plus" class="w-12 h-full text-lg" aria-label="Artır">+</button>
+          </div>
+          <button id="add" class="btn btn-outline flex-1">Sepete Ekle</button>
+        </div>
+        <button id="buy" class="btn btn-dark w-full mt-3">Hemen Satın Al</button>
+        <a href="${waLink(`Merhaba, "${p.name}" hakkında bilgi almak istiyorum.`)}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 mt-4 text-sm underline underline-offset-4">${UI.icon.wa} WhatsApp'tan bilgi al</a>
+        <div class="mt-8 border-t border-line">
+          ${acc("Ürün Açıklaması", esc(p.description), true)}
+          ${acc("Teslimat Koşulları", `İstanbul içi aynı gün teslimat yapılır. Teslimat günü ve saat aralığını sipariş sırasında seçersiniz. Özel günlerde yoğunluk nedeniyle saat aralığı değişebilir, bu durumda sizi önceden bilgilendiririz.`)}
+          ${acc("Çiçek Bakımı", `Vazo suyunu her gün tazeleyin, sapları keskin bir bıçakla çapraz kesin. Çiçeği doğrudan güneş, kalorifer ve meyve tabağından uzak tutun. Orkideleri haftada bir, saksı altından suyla besleyin.`)}
+          ${acc("Görsel Hakkında", `Çiçekler doğal ürün olduğu için mevsime göre renk ve türde küçük farklılıklar olabilir. Tasarımın genel görünümü ve değeri korunur.`)}
+        </div>
+      </div>
+    </div>
+    <section class="mt-28">
+      <h2 class="section-title">Bunları da Beğenebilirsiniz</h2>
+      <div id="similar" class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12 mt-10"></div>
+    </section>`;
+
+  const qty = document.getElementById("qty");
+  const n = () => Math.max(1, +qty.value || 1);
+  document.getElementById("minus").onclick = () => (qty.value = Math.max(1, n() - 1));
+  document.getElementById("plus").onclick = () => (qty.value = n() + 1);
+  document.getElementById("add").onclick = () => Cart.add(p, n());
+  document.getElementById("buy").onclick = () => { const it = Cart.items(); const e = it.find((x) => x.id === p.id); if (e) e.qty += n(); else it.push({ id: p.id, qty: n() }); Cart.save(it); location.href = "sepet.html"; };
+
+  const similar = products.filter((x) => x.active !== false && x.id !== p.id).sort((a, b) => (b.type === p.type) - (a.type === p.type)).slice(0, 4);
+  const sEl = document.getElementById("similar");
+  sEl.innerHTML = similar.map(productCard).join(""); bindAddButtons(sEl, similar);
+})();
+</script>
+</body>
+</html>

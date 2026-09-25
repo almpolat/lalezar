@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="tr">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <title>Lalezar Çiçekçilik | İstanbul Online Çiçek Siparişi, Aynı Gün Teslimat</title>
+  <meta name="description" content="Lalezar Çiçekçilik ile buket, vazoda aranjman, kutuda çiçek ve orkide siparişi verin. Bağdat Caddesi Çiftehavuzlar'dan İstanbul içi aynı gün teslimat.">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+  <!-- SLIDER -->
+  <section class="relative h-[62vh] min-h-[420px] max-h-[720px] bg-mist overflow-hidden" aria-label="Öne çıkanlar" id="hero">
+    <div id="slides"></div>
+    <button id="prev" class="hidden sm:grid absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 place-items-center bg-white/80 hover:bg-white" aria-label="Önceki">‹</button>
+    <button id="next" class="hidden sm:grid absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 place-items-center bg-white/80 hover:bg-white" aria-label="Sonraki">›</button>
+    <div id="dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2"></div>
+  </section>
+
+  <!-- KOLEKSİYONLAR -->
+  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-20">
+    <p class="section-sub">Koleksiyonlar</p>
+    <h2 class="section-title">Çiçek Dünyamızı Keşfedin</h2>
+    <div id="collections" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-10"></div>
+  </section>
+
+  <!-- EN ÇOK TERCİH EDİLENLER -->
+  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-24">
+    <p class="section-sub">Öne Çıkanlar</p>
+    <h2 class="section-title">En Çok Tercih Edilenler</h2>
+    <p class="text-center text-ink/60 mt-3">Sevdiklerinize özel aranjman ve buketler</p>
+    <div id="featured" class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12 mt-10"></div>
+    <div class="text-center mt-12"><a href="kategori.html" class="btn btn-outline">Tüm Ürünleri Görüntüle</a></div>
+  </section>
+
+  <!-- KİME ÇİÇEK -->
+  <section class="bg-mist mt-24 py-20">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-8">
+      <p class="section-sub">Gönderim Sebebi</p>
+      <h2 class="section-title">Kime Çiçek Göndereceksiniz?</h2>
+      <div id="occasions" class="flex gap-6 sm:gap-10 overflow-x-auto no-scrollbar mt-10 pb-2 sm:justify-center"></div>
+    </div>
+  </section>
+
+  <!-- KART NOTU BANNER -->
+  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-24">
+    <div class="grid lg:grid-cols-2 items-center">
+      <div class="aspect-[4/3] lg:aspect-auto lg:h-[520px] overflow-hidden bg-mist">
+        <img src="https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?auto=format&fit=crop&w=1200&h=900&q=75" alt="Elde taşınan çiçek buketi" loading="lazy" class="w-full h-full object-cover">
+      </div>
+      <div class="lg:pl-20 pt-10 lg:pt-0 max-w-xl">
+        <p class="section-sub !text-left">Lalezar'dan</p>
+        <h2 class="font-display text-4xl sm:text-5xl leading-tight">Kişiye Özel Kart Notları</h2>
+        <p class="mt-5 text-ink/70 leading-relaxed">Her siparişiniz, sizin yazdığınız mesajla birlikte özel kartımızda teslim edilir. İsterseniz isminizi gizleyebilir, sürprizi tamamen alıcıya bırakabilirsiniz.</p>
+        <p class="mt-4 text-ink/70 leading-relaxed">Tüm tasarımlarımız dükkânımızda, o gün gelen taze çiçeklerle elde hazırlanır.</p>
+        <a href="kategori.html" class="btn btn-dark mt-8">Alışverişe Başla</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORKİDE SATIRI -->
+  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-24">
+    <div class="flex items-end justify-between gap-4">
+      <div><p class="section-sub !text-left">Uzun ömürlü hediye</p><h2 class="section-title !text-left">Orkide Koleksiyonu</h2></div>
+      <a href="kategori.html?tur=orkide" class="text-[12px] tracking-[.18em] uppercase underline underline-offset-4 shrink-0">Tümünü Gör</a>
+    </div>
+    <div id="orchids" class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12 mt-10"></div>
+  </section>
+
+  <!-- GÜVEN -->
+  <section class="border-y border-line mt-24">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-8 py-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      <div><svg class="mx-auto" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="4" y="10" width="16" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><p class="mt-3 text-[13px] tracking-[.14em] uppercase">Güvenli Alışveriş</p><p class="text-sm text-ink/60 mt-1">Bilgileriniz SSL ile korunur.</p></div>
+      <div><svg class="mx-auto" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><p class="mt-3 text-[13px] tracking-[.14em] uppercase">Hızlı Teslimat</p><p class="text-sm text-ink/60 mt-1">İstanbul içi aynı gün.</p></div>
+      <div><svg class="mx-auto" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 21c-4-3-7-6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4-3 7-7 10z"/></svg><p class="mt-3 text-[13px] tracking-[.14em] uppercase">Özel Tasarım</p><p class="text-sm text-ink/60 mt-1">İsteğe göre kişiselleştirilir.</p></div>
+      <div><svg class="mx-auto" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1"/><rect x="17" y="13" width="4" height="6" rx="1"/></svg><p class="mt-3 text-[13px] tracking-[.14em] uppercase">Destek Ekibimiz</p><p class="text-sm text-ink/60 mt-1">WhatsApp ve telefonla.</p></div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-24">
+    <p class="section-sub">Bizi Takip Edin</p>
+    <h2 class="section-title"><a id="ig-title" href="#" target="_blank" rel="noopener" class="hover:text-orange"></a></h2>
+    <div id="insta" class="grid grid-cols-3 lg:grid-cols-6 gap-2 mt-10"></div>
+  </section>
+
+  <!-- MAĞAZA -->
+  <section id="magaza" class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-24 scroll-mt-40">
+    <div class="grid lg:grid-cols-2 border border-line">
+      <div class="p-8 sm:p-14">
+        <p class="section-sub !text-left">Mağazamız</p>
+        <h2 class="font-display text-4xl sm:text-5xl">Çiftehavuzlar</h2>
+        <dl id="store-info" class="mt-8 space-y-5 text-[15px]"></dl>
+        <div class="mt-10 flex flex-wrap gap-3"><a id="dir-link" href="#" target="_blank" rel="noopener" class="btn btn-dark">Yol Tarifi Al</a><a id="call-link" href="#" class="btn btn-outline">Hemen Ara</a></div>
+      </div>
+      <iframe id="map" title="Lalezar Çiçekçilik harita" class="w-full min-h-[380px] h-full border-0 bg-mist" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <!-- SEO METNİ -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-8 pt-24 text-[15px] leading-relaxed text-ink/75">
+    <h2 class="font-display text-3xl text-ink text-center">İstanbul'da Online Çiçek Siparişi</h2>
+    <p class="mt-6">Lalezar Çiçekçilik, Bağdat Caddesi Çiftehavuzlar'daki dükkânından İstanbul'un her yerine çiçek gönderir. Doğum günü, yıldönümü, geçmiş olsun ya da sadece "aklımdasın" demek için; buket, vazoda aranjman, kutuda çiçek ve orkide seçeneklerimizi online inceleyip birkaç adımda sipariş verebilirsiniz.</p>
+    <details class="mt-4 border-t border-line pt-4"><summary class="flex justify-between items-center text-ink">Aynı gün teslimat nasıl çalışır? <span class="plus text-xl">+</span></summary><p class="mt-3">Gün içinde verilen siparişler, uygun saat aralığında aynı gün teslim edilir. Teslimat saatini sipariş sırasında siz seçersiniz; siparişiniz hazırlanınca sizi bilgilendiririz.</p></details>
+    <details class="mt-4 border-t border-line pt-4"><summary class="flex justify-between items-center text-ink">Adres bilgisinde nelere dikkat etmeliyim? <span class="plus text-xl">+</span></summary><p class="mt-3">Bina adı, kat, daire ve varsa site/blok bilgisini eksiksiz yazın. Alıcının telefon numarası teslimatın sorunsuz yapılması için önemlidir.</p></details>
+    <details class="mt-4 border-y border-line py-4"><summary class="flex justify-between items-center text-ink">Ürün fotoğraftakiyle aynı mı gelir? <span class="plus text-xl">+</span></summary><p class="mt-3">Çiçekler doğal ürün olduğu için mevsime göre renk ve türde küçük farklar olabilir. Tasarımın genel görünümü ve değeri korunur.</p></details>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+(async () => {
+  const { esc, productCard, bindAddButtons, productImage } = UI;
+  const S = LALEZAR_CONFIG.shop;
+
+  // --- Slider ---
+  const slides = LALEZAR_SEED.heroSlides;
+  document.getElementById("slides").innerHTML = slides.map((s, i) => `
+    <div class="slide ${i === 0 ? "on" : ""}">
+      <img src="${s.image}" alt="" class="absolute inset-0 w-full h-full object-cover" ${i ? 'loading="lazy"' : ""}>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent"></div>
+      <div class="relative h-full max-w-[1400px] mx-auto px-6 sm:px-16 flex flex-col justify-center text-white">
+        <p class="text-[12px] tracking-[.25em] uppercase">${esc(s.kicker)}</p>
+        <h2 class="font-display text-5xl sm:text-7xl leading-[1.02] mt-4 max-w-xl">${esc(s.title)}</h2>
+        <div><a href="${s.link}" class="btn btn-white mt-8">Alışverişe Başla</a></div>
+      </div>
+    </div>`).join("");
+  const dots = document.getElementById("dots");
+  dots.innerHTML = slides.map((_, i) => `<button class="w-2.5 h-2.5 rounded-full border border-white ${i === 0 ? "bg-white" : ""}" aria-label="${i + 1}. görsel"></button>`).join("");
+  let cur = 0, timer;
+  const els = [...document.querySelectorAll(".slide")], dEls = [...dots.children];
+  const go = (n) => { els[cur].classList.remove("on"); dEls[cur].classList.remove("bg-white"); cur = (n + els.length) % els.length; els[cur].classList.add("on"); dEls[cur].classList.add("bg-white"); restart(); };
+  const restart = () => { clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => go(cur + 1), 6000); };
+  document.getElementById("prev").onclick = () => go(cur - 1);
+  document.getElementById("next").onclick = () => go(cur + 1);
+  dEls.forEach((d, i) => (d.onclick = () => go(i)));
+  restart();
+
+  // --- Veriler ---
+  const [products, cats] = await Promise.all([Store.listProducts(), Store.getCategories()]);
+  const active = products.filter((p) => p.active !== false);
+
+  // Koleksiyonlar
+  document.getElementById("collections").innerHTML = cats.types.slice(0, 4).map((c) => {
+    const list = active.filter((x) => x.type === c.slug);
+    const p = list[0];
+    return `<a href="kategori.html?tur=${c.slug}" class="group block">
+      <div class="aspect-[3/4] overflow-hidden bg-mist">${p ? `<div class="w-full h-full transition-transform duration-700 group-hover:scale-105">${productImage(p)}</div>` : ""}</div>
+      <h3 class="font-display text-2xl mt-4">${esc(c.name)}</h3>
+      <p class="text-[12px] tracking-[.14em] uppercase text-ink/55 mt-1">${list.length} ürün</p></a>`;
+  }).join("");
+
+  // En çok tercih edilenler (4'ün katı)
+  const feat = active.filter((p) => p.featured), rest = active.filter((p) => !p.featured);
+  const want = Math.min(8, Math.max(4, Math.ceil(feat.length / 4) * 4));
+  const list = [...feat, ...rest].slice(0, want);
+  const fEl = document.getElementById("featured");
+  fEl.innerHTML = list.map(productCard).join("");
+  bindAddButtons(fEl, list);
+
+  // Kime çiçek
+  document.getElementById("occasions").innerHTML = cats.occasions.map((o) => {
+    const p = active.find((x) => (x.occasions || []).includes(o.slug));
+    return `<a href="kategori.html?sebep=${o.slug}" class="group shrink-0 w-28 sm:w-32 text-center">
+      <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-white ring-1 ring-line group-hover:ring-ink transition">${p ? productImage(p) : ""}</div>
+      <p class="mt-3 text-[14px]">${esc(o.name)}</p></a>`;
+  }).join("");
+
+  // Orkide satırı
+  const orch = active.filter((p) => p.type === "orkide").slice(0, 4);
+  const oEl = document.getElementById("orchids");
+  if (orch.length) { oEl.innerHTML = orch.map(productCard).join(""); bindAddButtons(oEl, orch); }
+  else oEl.closest("section").remove();
+
+  // Instagram
+  const ig = `https://www.instagram.com/${S.instagram}/`;
+  const igT = document.getElementById("ig-title"); igT.href = ig; igT.textContent = "@" + S.instagram;
+  document.getElementById("insta").innerHTML = active.slice(0, 6).map((p) =>
+    `<a href="${ig}" target="_blank" rel="noopener" class="block aspect-square overflow-hidden bg-mist group relative" aria-label="Instagram'da gör">${productImage(p)}<span class="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition"></span></a>`).join("");
+
+  // Mağaza
+  const rows = [["Adres", esc(S.address)], ["Telefon", `<a href="tel:${S.phoneTel}" class="hover:underline">${esc(S.phone)}</a>`], ["Instagram", `<a href="${ig}" target="_blank" rel="noopener" class="hover:underline">@${esc(S.instagram)}</a>`]];
+  if (S.hours) rows.push(["Çalışma Saatleri", esc(S.hours)]);
+  document.getElementById("store-info").innerHTML = rows.map(([k, v]) => `<div><dt class="text-[12px] tracking-[.14em] uppercase text-ink/50">${k}</dt><dd class="mt-1">${v}</dd></div>`).join("");
+  const q = encodeURIComponent(S.mapsQuery);
+  document.getElementById("map").src = `https://www.google.com/maps?q=${q}&output=embed`;
+  document.getElementById("dir-link").href = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
+  document.getElementById("call-link").href = `tel:${S.phoneTel}`;
+})();
+</script>
+</body>
+</html>

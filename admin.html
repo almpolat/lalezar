@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <title>Yönetim | Lalezar Çiçekçilik</title>
+  <meta name="robots" content="noindex">
+</head>
+<body class="bg-[#FAFAF5]">
+<div id="app"></div>
+
+<!-- Ürün düzenleme penceresi -->
+<dialog id="dlg" class="rounded-[28px] p-0 w-[min(760px,94vw)] backdrop:bg-ink/50">
+  <form id="pform" method="dialog" class="p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-6">
+      <h2 id="dlg-title" class="font-display text-2xl">Yeni çiçek</h2>
+      <button type="button" data-close class="text-3xl leading-none px-2" aria-label="Kapat">×</button>
+    </div>
+    <div class="grid sm:grid-cols-[220px_1fr] gap-6">
+      <div>
+        <div id="preview" class="aspect-square rounded-3xl overflow-hidden bg-limesoft"></div>
+        <label class="btn btn-dark w-full mt-3 !py-2.5 cursor-pointer text-sm">Fotoğraf yükle<input id="file" type="file" accept="image/*" class="sr-only"></label>
+        <button type="button" id="rmimg" class="w-full text-sm underline mt-2 text-ink/60">Fotoğrafı kaldır</button>
+        <p class="text-xs text-ink/50 mt-3 leading-relaxed">Fotoğraf yoksa bu renklerle illüstrasyon çizilir:</p>
+        <div class="flex gap-2 mt-2"><input type="color" id="c1" class="w-10 h-10 rounded-lg" aria-label="Ana renk"><input type="color" id="c2" class="w-10 h-10 rounded-lg" aria-label="İkinci renk"></div>
+      </div>
+      <div class="grid gap-4">
+        <div><label class="label" for="f-name">Çiçeğin adı</label><input class="input" id="f-name" required></div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="label" for="f-price">Fiyat (TL)</label><input class="input" id="f-price" type="number" min="0" step="1" required></div>
+          <div><label class="label" for="f-old">Eski fiyat <span class="font-normal text-ink/50">(indirim için)</span></label><input class="input" id="f-old" type="number" min="0" step="1"></div>
+        </div>
+        <div><label class="label" for="f-type">Kategori</label><select class="input" id="f-type"></select></div>
+        <fieldset><legend class="label">Gönderim sebepleri</legend><div id="f-occ" class="flex flex-wrap gap-2"></div></fieldset>
+        <div><label class="label" for="f-desc">Açıklama</label><textarea class="input" id="f-desc" rows="3"></textarea></div>
+        <div class="flex flex-wrap gap-6 text-sm">
+          <label class="flex items-center gap-2"><input type="checkbox" id="f-feat" class="w-5 h-5 accent-orange"> Ana sayfada göster</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="f-active" class="w-5 h-5 accent-orange"> Satışta</label>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap justify-between gap-3 mt-8 pt-6 border-t border-ink/10">
+      <button type="button" id="del" class="btn !px-4 text-[#B42318]">Çiçeği sil</button>
+      <div class="flex gap-3 ml-auto"><button type="button" data-close class="btn btn-ghost">Vazgeç</button><button type="submit" class="btn btn-primary">Kaydet</button></div>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(async () => {
+  const { esc, money, productImage, slugify, toast } = UI;
+  const app = document.getElementById("app");
+  const isDemo = Store.mode !== "firebase";
+  let products = [], cats = { types: [], occasions: [] }, tab = "urunler", search = "";
+
+  // ---------------- GİRİŞ ----------------
+  async function loginView() {
+    app.innerHTML = `
+      <div class="min-h-screen grid place-items-center px-4">
+        <form id="login" class="bg-white rounded-[32px] p-8 sm:p-10 w-full max-w-sm shadow-sm border border-ink/10">
+          <img src="assets/logo.png" alt="Lalezar Çiçekçilik" class="h-12 mx-auto">
+          <h1 class="font-display text-2xl text-center mt-6">Yönetim paneli</h1>
+          ${isDemo ? "" : `<label class="label mt-6" for="email">E-posta</label><input class="input" id="email" type="email" autocomplete="username" required>`}
+          <label class="label ${isDemo ? "mt-6" : "mt-4"}" for="pw">Şifre</label><input class="input" id="pw" type="password" autocomplete="current-password" required>
+          <p id="lerr" class="hidden text-sm text-[#B42318] mt-3" role="alert"></p>
+          <button class="btn btn-dark w-full mt-6">Giriş yap</button>
+          ${isDemo ? `<p class="text-xs text-ink/50 text-center mt-4">Demo modu: şifre config.js dosyasında.</p>` : ""}
+          <a href="index.html" class="block text-center text-sm underline mt-4">Siteye dön</a>
+        </form>
+      </div>`;
+    document.getElementById("login").onsubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await Store.login(isDemo ? "" : document.getElementById("email").value, document.getElementById("pw").value);
+        boot();
+      } catch (x) { const l = document.getElementById("lerr"); l.textContent = x.message; l.classList.remove("hidden"); }
+    };
+  }
+
+  // ---------------- ANA ÇERÇEVE ----------------
+  async function boot() {
+    if (!(await Store.isAdmin())) return loginView();
+    [products, cats] = await Promise.all([Store.listProducts(), Store.getCategories()]);
+    shell();
+  }
+
+  function shell() {
+    const tabs = [["urunler", "Çiçekler"], ["kategoriler", "Kategoriler"], ["siparisler", "Siparişler"], ["ayarlar", "Ayarlar"]];
+    app.innerHTML = `
+      <header class="bg-white border-b border-ink/10 sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+          <img src="assets/logo.png" alt="Lalezar" class="h-9">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${isDemo ? "bg-petal text-orange" : "bg-limesoft"}">${isDemo ? "Demo modu" : "Canlı"}</span>
+          <div class="ml-auto flex items-center gap-4 text-sm"><a href="index.html" target="_blank" class="underline">Siteyi aç</a><button id="logout" class="underline">Çıkış</button></div>
+        </div>
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto no-scrollbar">
+          ${tabs.map(([k, v]) => `<button data-tab="${k}" class="px-4 py-3 text-sm font-semibold border-b-2 ${tab === k ? "border-orange text-ink" : "border-transparent text-ink/55 hover:text-ink"}">${v}</button>`).join("")}
+        </nav>
+      </header>
+      <main id="panel" class="max-w-6xl mx-auto px-4 sm:px-6 py-8"></main>`;
+    app.querySelectorAll("[data-tab]").forEach((b) => b.onclick = () => { tab = b.dataset.tab; shell(); });
+    document.getElementById("logout").onclick = async () => { await Store.logout(); loginView(); };
+    ({ urunler: productsView, kategoriler: catsView, siparisler: ordersView, ayarlar: settingsView })[tab]();
+  }
+
+  // ---------------- ÇİÇEKLER ----------------
+  function productsView() {
+    const panel = document.getElementById("panel");
+    const typeName = (s) => (cats.types.find((c) => c.slug === s) || {}).name || "Kategorisiz";
+    const q = search.toLocaleLowerCase("tr");
+    const list = products.filter((p) => !q || p.name.toLocaleLowerCase("tr").includes(q));
+    panel.innerHTML = `
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        <h1 class="font-display text-3xl mr-auto">Çiçekler <span class="text-ink/40 text-xl">${products.length}</span></h1>
+        <input id="psearch" class="input !w-56 !py-2.5 !rounded-full" placeholder="Çiçek ara" value="${esc(search)}" aria-label="Çiçek ara">
+        <button id="new" class="btn btn-primary !py-2.5">Yeni çiçek ekle</button>
+      </div>
+      <p class="text-sm text-ink/60 mb-4">Fiyatı listeden direkt değiştirebilirsin, Enter'a basınca kaydedilir. Diğer bilgiler için satıra tıkla.</p>
+      <div class="bg-white rounded-[24px] border border-ink/10 divide-y divide-ink/10">
+        ${list.map((p) => `
+          <div class="flex items-center gap-4 p-3 sm:p-4 ${p.active === false ? "opacity-50" : ""}">
+            <button data-edit="${p.id}" class="w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-limesoft" aria-label="${esc(p.name)} düzenle">${productImage(p)}</button>
+            <button data-edit="${p.id}" class="flex-1 min-w-0 text-left">
+              <p class="font-semibold truncate">${esc(p.name)} ${p.featured ? `<span class="text-xs bg-lime rounded-full px-2 py-0.5 ml-1 align-middle">Ana sayfa</span>` : ""}${p.active === false ? `<span class="text-xs bg-ink/10 rounded-full px-2 py-0.5 ml-1 align-middle">Satışta değil</span>` : ""}</p>
+              <p class="text-sm text-ink/55">${esc(typeName(p.type))}</p>
+            </button>
+            <label class="flex items-center gap-1 text-sm"><input data-price="${p.id}" type="number" min="0" value="${p.price}" class="input !w-28 !py-2 text-right" aria-label="${esc(p.name)} fiyatı"> TL</label>
+          </div>`).join("") || `<p class="p-8 text-center text-ink/60">${search ? "Bu isimde çiçek yok." : "Henüz çiçek yok. İlk çiçeği eklemek için sağ üstteki butonu kullan."}</p>`}
+      </div>`;
+    document.getElementById("new").onclick = () => openEditor(null);
+    const s = document.getElementById("psearch");
+    s.oninput = () => { search = s.value; productsView(); const n = document.getElementById("psearch"); n.focus(); n.setSelectionRange(n.value.length, n.value.length); };
+    panel.querySelectorAll("[data-edit]").forEach((b) => b.onclick = () => openEditor(products.find((p) => p.id === b.dataset.edit)));
+    panel.querySelectorAll("[data-price]").forEach((inp) => {
+      const save = async () => {
+        const p = products.find((x) => x.id === inp.dataset.price); const v = Math.max(0, Math.round(+inp.value));
+        if (!p || v === p.price) return;
+        p.price = v; await Store.saveProduct(p); toast(`${p.name}: ${money(v)} olarak kaydedildi`);
+      };
+      inp.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); inp.blur(); } });
+      inp.addEventListener("change", save);
+    });
+  }
+
+  // Fotoğrafı küçültüp JPEG'e çevirir (en fazla 1000px)
+  function compress(file) {
+    return new Promise((res, rej) => {
+      const img = new Image(); const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const max = 1000, sc = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement("canvas"); c.width = Math.round(img.width * sc); c.height = Math.round(img.height * sc);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        res(c.toDataURL("image/jpeg", 0.8));
+      };
+      img.onerror = () => rej(new Error("Bu dosya açılamadı. JPG veya PNG bir fotoğraf seç."));
+      img.src = url;
+    });
+  }
+
+  const dlg = document.getElementById("dlg");
+  dlg.querySelectorAll("[data-close]").forEach((b) => b.onclick = () => dlg.close());
+  let editing = null;
+
+  function openEditor(p) {
+    editing = p ? JSON.parse(JSON.stringify(p)) : { name: "", price: 0, oldPrice: 0, type: cats.types[0]?.slug || "", occasions: [], description: "", featured: false, active: true, art: ["#F28C28", "#FFFFFF"], image: "" };
+    document.getElementById("dlg-title").textContent = p ? "Çiçeği düzenle" : "Yeni çiçek";
+    document.getElementById("del").style.display = p ? "" : "none";
+    const set = (id, v) => (document.getElementById(id).value = v ?? "");
+    set("f-name", editing.name); set("f-price", editing.price || ""); set("f-old", editing.oldPrice || ""); set("f-desc", editing.description);
+    document.getElementById("f-type").innerHTML = cats.types.map((c) => `<option value="${c.slug}" ${c.slug === editing.type ? "selected" : ""}>${esc(c.name)}</option>`).join("");
+    document.getElementById("f-occ").innerHTML = cats.occasions.map((o) => `<label class="text-sm flex items-center gap-2 border border-ink/15 rounded-full px-3 py-1.5"><input type="checkbox" value="${o.slug}" ${editing.occasions?.includes(o.slug) ? "checked" : ""} class="accent-orange"> ${esc(o.name)}</label>`).join("");
+    document.getElementById("f-feat").checked = !!editing.featured;
+    document.getElementById("f-active").checked = editing.active !== false;
+    document.getElementById("c1").value = (editing.art || [])[0] || "#F28C28";
+    document.getElementById("c2").value = (editing.art || [])[1] || "#FFFFFF";
+    preview(); dlg.showModal();
+  }
+  function readForm() {
+    editing.name = document.getElementById("f-name").value.trim();
+    editing.price = Math.max(0, Math.round(+document.getElementById("f-price").value || 0));
+    editing.oldPrice = Math.max(0, Math.round(+document.getElementById("f-old").value || 0));
+    editing.type = document.getElementById("f-type").value;
+    editing.description = document.getElementById("f-desc").value.trim();
+    editing.occasions = [...document.querySelectorAll("#f-occ input:checked")].map((i) => i.value);
+    editing.featured = document.getElementById("f-feat").checked;
+    editing.active = document.getElementById("f-active").checked;
+    editing.art = [document.getElementById("c1").value.toUpperCase(), document.getElementById("c2").value.toUpperCase()];
+  }
+  function preview() { readForm(); document.getElementById("preview").innerHTML = productImage({ ...editing, name: editing.name || "Önizleme", id: editing.id || "new" }); }
+  ["c1", "c2", "f-type"].forEach((id) => document.getElementById(id).addEventListener("input", preview));
+  document.getElementById("file").onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    try { editing.image = await compress(f); preview(); } catch (x) { alert(x.message); }
+    e.target.value = "";
+  };
+  document.getElementById("rmimg").onclick = () => { editing.image = ""; preview(); };
+  document.getElementById("pform").onsubmit = async (e) => {
+    e.preventDefault(); readForm();
+    if (!editing.name) { document.getElementById("f-name").focus(); return; }
+    const saved = await Store.saveProduct(editing);
+    const i = products.findIndex((x) => x.id === saved.id);
+    if (i >= 0) products[i] = saved; else products.unshift(saved);
+    dlg.close(); toast(`${saved.name} kaydedildi`); productsView();
+  };
+  document.getElementById("del").onclick = async () => {
+    if (!confirm(`"${editing.name}" silinsin mi? Bu işlem geri alınamaz.`)) return;
+    await Store.deleteProduct(editing.id);
+    products = products.filter((p) => p.id !== editing.id);
+    dlg.close(); toast("Çiçek silindi"); productsView();
+  };
+
+  // ---------------- KATEGORİLER ----------------
+  function catsView() {
+    const panel = document.getElementById("panel");
+    const block = (key, title, hint) => `
+      <section class="bg-white rounded-[24px] border border-ink/10 p-6">
+        <h2 class="font-display text-2xl">${title}</h2><p class="text-sm text-ink/60 mt-1 mb-5">${hint}</p>
+        <div class="space-y-2">${cats[key].map((c, i) => {
+          const n = products.filter((p) => key === "types" ? p.type === c.slug : (p.occasions || []).includes(c.slug)).length;
+          return `<div class="flex items-center gap-2"><input class="input !py-2" data-cat="${key}" data-i="${i}" value="${esc(c.name)}" aria-label="Kategori adı"><span class="text-xs text-ink/50 w-16 text-right shrink-0">${n} çiçek</span><button data-delcat="${key}" data-i="${i}" class="px-3 text-xl text-ink/40 hover:text-[#B42318]" aria-label="${esc(c.name)} sil">×</button></div>`;
+        }).join("")}</div>
+        <div class="flex gap-2 mt-4"><input class="input !py-2" id="new-${key}" placeholder="Yeni ekle"><button data-addcat="${key}" class="btn btn-dark !py-2 shrink-0">Ekle</button></div>
+      </section>`;
+    panel.innerHTML = `<h1 class="font-display text-3xl mb-6">Kategoriler</h1>
+      <div class="grid lg:grid-cols-2 gap-6">${block("types", "Çiçek türleri", "Menüde ve kategori sayfalarında görünür.")}${block("occasions", "Gönderim sebepleri", "Gönderim Sebebi menüsünde görünür.")}</div>`;
+    const persist = async () => { await Store.saveCategories(cats); toast("Kategoriler kaydedildi"); };
+    panel.querySelectorAll("[data-cat]").forEach((inp) => inp.onchange = () => { cats[inp.dataset.cat][+inp.dataset.i].name = inp.value.trim() || cats[inp.dataset.cat][+inp.dataset.i].name; persist(); });
+    panel.querySelectorAll("[data-delcat]").forEach((b) => b.onclick = async () => {
+      const c = cats[b.dataset.delcat][+b.dataset.i];
+      if (!confirm(`"${c.name}" silinsin mi? Bu kategorideki çiçekler silinmez.`)) return;
+      cats[b.dataset.delcat].splice(+b.dataset.i, 1); await persist(); catsView();
+    });
+    panel.querySelectorAll("[data-addcat]").forEach((b) => b.onclick = async () => {
+      const key = b.dataset.addcat; const inp = document.getElementById("new-" + key); const name = inp.value.trim(); if (!name) return;
+      let slug = slugify(name); while (cats[key].some((c) => c.slug === slug)) slug += "-2";
+      cats[key].push({ slug, name }); await persist(); catsView();
+    });
+  }
+
+  // ---------------- SİPARİŞLER ----------------
+  async function ordersView() {
+    const panel = document.getElementById("panel");
+    panel.innerHTML = `<p class="text-ink/60">Siparişler yükleniyor…</p>`;
+    let orders = [];
+    try { orders = await Store.listOrders(); } catch (e) { panel.innerHTML = `<p class="text-[#B42318]">Siparişler okunamadı: ${esc(e.message)}</p>`; return; }
+    const STAT = ["Yeni", "Hazırlanıyor", "Yolda", "Teslim edildi", "İptal"];
+    panel.innerHTML = `<h1 class="font-display text-3xl mb-6">Siparişler <span class="text-ink/40 text-xl">${orders.length}</span></h1>
+      ${isDemo ? `<p class="text-sm bg-petal rounded-2xl p-4 mb-6">Demo modunda sadece bu tarayıcıdan verilen siparişler görünür. Firebase moduna geçince tüm siparişler burada toplanır.</p>` : ""}
+      <div class="grid gap-4">${orders.map((o) => `
+        <article class="bg-white rounded-[24px] border border-ink/10 p-5 sm:p-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <p class="font-display text-xl">${esc(o.id)}</p>
+            <p class="text-sm text-ink/55">${new Date(o.createdAt).toLocaleString("tr-TR")}</p>
+            <select data-status="${esc(o.id)}" class="input !w-auto !py-1.5 !rounded-full ml-auto text-sm" aria-label="Sipariş durumu">${STAT.map((s) => `<option ${s === o.status ? "selected" : ""}>${s}</option>`).join("")}</select>
+          </div>
+          <div class="grid md:grid-cols-3 gap-5 mt-5 text-sm">
+            <div><p class="text-ink/50 mb-1">Ürünler</p>${o.items.map((i) => `<p>${i.qty} x ${esc(i.name)}</p>`).join("")}<p class="font-bold mt-1">${money(o.total)}</p></div>
+            <div><p class="text-ink/50 mb-1">Alıcı</p><p>${esc(o.recipient.name)}, <a class="underline" href="tel:${esc(o.recipient.phone)}">${esc(o.recipient.phone)}</a></p><p>${esc(o.recipient.address)}, ${esc(o.recipient.neighborhood)}, ${esc(o.recipient.district)}</p><p class="mt-1"><strong>${new Date(o.date).toLocaleDateString("tr-TR")}</strong>, ${esc(o.slot)}</p></div>
+            <div><p class="text-ink/50 mb-1">Gönderen</p><p>${esc(o.sender.name)}, <a class="underline" href="tel:${esc(o.sender.phone)}">${esc(o.sender.phone)}</a></p>${o.note ? `<p class="text-ink/50 mt-2 mb-1">Kart notu${o.anonymous ? " (isimsiz)" : ""}</p><p class="italic">"${esc(o.note)}"</p>` : ""}</div>
+          </div>
+        </article>`).join("") || `<div class="bg-white rounded-[24px] border border-ink/10 p-10 text-center text-ink/60">Henüz sipariş yok. Siteden verilen siparişler burada görünecek.</div>`}</div>`;
+    panel.querySelectorAll("[data-status]").forEach((s) => s.onchange = async () => { await Store.updateOrder(s.dataset.status, { status: s.value }); toast(`${s.dataset.status}: ${s.value}`); });
+  }
+
+  // ---------------- AYARLAR ----------------
+  function settingsView() {
+    const C = LALEZAR_CONFIG;
+    document.getElementById("panel").innerHTML = `<h1 class="font-display text-3xl mb-6">Ayarlar</h1>
+      <div class="grid lg:grid-cols-2 gap-6">
+        <section class="bg-white rounded-[24px] border border-ink/10 p-6">
+          <h2 class="font-display text-2xl">Çalışma modu</h2>
+          <p class="mt-3 text-sm leading-relaxed">${isDemo
+            ? "Şu an <strong>demo modundasın</strong>. Yaptığın değişiklikler sadece bu tarayıcıda saklanır. Herkesin aynı çiçekleri görmesi için js/config.js dosyasında mode değerini \"firebase\" yap ve Firebase bilgilerini gir. Adımlar README dosyasında."
+            : "Site <strong>Firebase'e bağlı</strong>. Değişiklikler anında tüm ziyaretçilere yansır."}</p>
+        </section>
+        <section class="bg-white rounded-[24px] border border-ink/10 p-6">
+          <h2 class="font-display text-2xl">Dükkân bilgileri</h2>
+          <dl class="mt-3 text-sm space-y-1.5"><div><dt class="inline text-ink/55">Telefon:</dt> <dd class="inline">${esc(C.shop.phone)}</dd></div><div><dt class="inline text-ink/55">Adres:</dt> <dd class="inline">${esc(C.shop.address)}</dd></div><div><dt class="inline text-ink/55">Instagram:</dt> <dd class="inline">@${esc(C.shop.instagram)}</dd></div></dl>
+          <p class="text-xs text-ink/50 mt-3">Bu bilgiler js/config.js dosyasından değiştirilir.</p>
+        </section>
+        <section class="bg-white rounded-[24px] border border-ink/10 p-6 lg:col-span-2">
+          <h2 class="font-display text-2xl">Örnek çiçekler</h2>
+          <p class="mt-3 text-sm text-ink/70">Başlangıçtaki 18 örnek çiçeği ve kategorileri yükler. ${isDemo ? "Mevcut çiçeklerin yerine geçer." : "Aynı kimlikli çiçeklerin üzerine yazar, eklediğin diğer çiçeklere dokunmaz."}</p>
+          <button id="seed" class="btn btn-ghost mt-4">Örnek çiçekleri yükle</button>
+        </section>
+      </div>`;
+    document.getElementById("seed").onclick = async () => {
+      if (!confirm("Örnek çiçekler yüklensin mi?")) return;
+      await Store.loadSeed(); [products, cats] = await Promise.all([Store.listProducts(), Store.getCategories()]); toast("Örnek çiçekler yüklendi");
+    };
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

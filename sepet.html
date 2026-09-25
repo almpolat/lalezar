@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <title>Sepetim | Lalezar Çiçekçilik</title>
+</head>
+<body>
+<div id="site-header"></div>
+<main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 pt-10"></main>
+<div id="site-footer"></div>
+<script>
+(async () => {
+  const { esc, money, productImage, Cart, waLink } = UI;
+  const D = LALEZAR_CONFIG.delivery;
+  const main = document.getElementById("main");
+  const ILCELER = ["Adalar","Arnavutköy","Ataşehir","Avcılar","Bağcılar","Bahçelievler","Bakırköy","Başakşehir","Bayrampaşa","Beşiktaş","Beykoz","Beylikdüzü","Beyoğlu","Büyükçekmece","Çatalca","Çekmeköy","Esenler","Esenyurt","Eyüpsultan","Fatih","Gaziosmanpaşa","Güngören","Kadıköy","Kağıthane","Kartal","Küçükçekmece","Maltepe","Pendik","Sancaktepe","Sarıyer","Silivri","Sultanbeyli","Sultangazi","Şile","Şişli","Tuzla","Ümraniye","Üsküdar","Zeytinburnu"];
+  const products = await Store.listProducts();
+  const byId = Object.fromEntries(products.map((p) => [p.id, p]));
+
+  function lines() {
+    return Cart.items().map((it) => ({ ...it, p: byId[it.id] })).filter((l) => l.p && l.p.active !== false);
+  }
+
+  function render() {
+    const L = lines();
+    if (!L.length) {
+      main.innerHTML = `<div class="bg-limesoft p-12 text-center max-w-2xl mx-auto"><h1 class="font-display text-4xl">Sepetin boş.</h1><p class="mt-3 text-ink/70">Beğendiğin bir çiçeği sepete ekle, adres ve teslimat saatini burada seç.</p><a href="kategori.html" class="btn btn-dark mt-7">Çiçekleri incele</a></div>`;
+      return;
+    }
+    const sub = L.reduce((a, l) => a + l.p.price * l.qty, 0);
+    const today = new Date(); const iso = (d) => d.toISOString().slice(0, 10);
+    main.innerHTML = `
+      <h1 class="font-display text-5xl text-center mb-12">Sepetim</h1>
+      <form id="checkout" class="grid lg:grid-cols-[1.35fr_1fr] gap-8 lg:gap-12 items-start" novalidate>
+        <div class="space-y-10">
+          <section>
+            <ul class="divide-y divide-ink/10 border-y border-ink/10">
+              ${L.map((l) => `<li class="py-5 flex gap-4 items-center">
+                <a href="urun.html?id=${l.p.id}" class="w-20 h-20 sm:w-24 sm:h-24  overflow-hidden shrink-0 bg-limesoft">${productImage(l.p)}</a>
+                <div class="flex-1 min-w-0">
+                  <a href="urun.html?id=${l.p.id}" class="font-display text-lg leading-snug hover:text-orange">${esc(l.p.name)}</a>
+                  <p class="text-sm text-ink/60">${money(l.p.price)}</p>
+                  <button type="button" data-remove="${l.p.id}" class="text-sm underline underline-offset-2 text-ink/60 hover:text-ink mt-1">Kaldır</button>
+                </div>
+                <div class="flex items-center border-2 border-ink/15  h-10">
+                  <button type="button" data-dec="${l.p.id}" class="w-9 h-full" aria-label="Azalt">−</button><span class="w-6 text-center text-sm font-semibold">${l.qty}</span><button type="button" data-inc="${l.p.id}" class="w-9 h-full" aria-label="Artır">+</button>
+                </div>
+                <p class="w-32 text-right whitespace-nowrap hidden sm:block">${money(l.p.price * l.qty)}</p>
+              </li>`).join("")}
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="font-display text-3xl mb-5">Gönderen</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="label" for="senderName">Adın soyadın</label><input class="input" id="senderName" required autocomplete="name"></div>
+              <div><label class="label" for="senderPhone">Telefonun</label><input class="input" id="senderPhone" type="tel" required autocomplete="tel" placeholder="05xx xxx xx xx"></div>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="font-display text-3xl mb-5">Alıcı ve adres</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="label" for="recName">Alıcının adı soyadı</label><input class="input" id="recName" required></div>
+              <div><label class="label" for="recPhone">Alıcının telefonu</label><input class="input" id="recPhone" type="tel" required placeholder="05xx xxx xx xx"></div>
+              <div><label class="label" for="district">İlçe</label><select class="input" id="district" required><option value="">Seç</option>${ILCELER.map((i) => `<option>${i}</option>`).join("")}</select></div>
+              <div><label class="label" for="neighborhood">Mahalle</label><input class="input" id="neighborhood" required></div>
+              <div class="sm:col-span-2"><label class="label" for="address">Açık adres</label><textarea class="input" id="address" rows="3" required placeholder="Cadde, sokak, bina no, kat, daire, site/blok adı"></textarea></div>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="font-display text-3xl mb-5">Teslimat ve kart notu</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="label" for="date">Teslimat günü</label><input class="input" id="date" type="date" min="${iso(today)}" value="${iso(today)}" required></div>
+              <div><label class="label" for="slot">Saat aralığı</label><select class="input" id="slot" required>${D.slots.map((s) => `<option>${esc(s)}</option>`).join("")}</select></div>
+              <div class="sm:col-span-2"><label class="label" for="note">Karta yazılacak mesaj <span class="font-normal text-ink/50">(isteğe bağlı)</span></label><textarea class="input" id="note" rows="3" maxlength="300" placeholder="İyi ki doğdun…"></textarea><p class="text-xs text-ink/50 mt-1"><span id="noteCount">0</span>/300</p></div>
+              <label class="sm:col-span-2 flex items-center gap-3 text-sm"><input type="checkbox" id="anon" class="w-5 h-5 accent-orange"> İsmim kartta yazmasın</label>
+            </div>
+          </section>
+        </div>
+
+        <aside id="odeme" class="bg-mist p-6 sm:p-8 lg:sticky lg:top-40">
+          <h2 class="font-display text-2xl">Sipariş özeti</h2>
+          <dl class="mt-6 space-y-3 text-[15px]">
+            <div class="flex justify-between"><dt>Ürünler</dt><dd>${money(sub)}</dd></div>
+            <div class="flex justify-between"><dt>Teslimat</dt><dd>${D.fee ? money(D.fee) : "Ücretsiz"}</dd></div>
+            <div class="flex justify-between text-lg font-bold pt-3 border-t border-ink/15"><dt>Toplam</dt><dd>${money(sub + (D.fee || 0))}</dd></div>
+          </dl>
+          <p id="err" class="hidden mt-5 text-sm bg-white  p-3 text-[#B42318]" role="alert"></p>
+          <button class="btn btn-dark w-full mt-6">Siparişi Tamamla</button>
+          <p class="text-xs text-ink/60 mt-4 leading-relaxed">Siparişin dükkâna iletilir. Ödeme ve teyit için seni WhatsApp'tan ya da telefonla arıyoruz.</p>
+        </aside>
+      </form>`;
+
+    main.querySelectorAll("[data-remove]").forEach((b) => b.onclick = () => { Cart.setQty(b.dataset.remove, 0); render(); });
+    main.querySelectorAll("[data-inc]").forEach((b) => b.onclick = () => { const it = Cart.items().find((x) => x.id === b.dataset.inc); Cart.setQty(it.id, it.qty + 1); render(); });
+    main.querySelectorAll("[data-dec]").forEach((b) => b.onclick = () => { const it = Cart.items().find((x) => x.id === b.dataset.dec); Cart.setQty(it.id, it.qty - 1); render(); });
+    const note = document.getElementById("note");
+    note.oninput = () => (document.getElementById("noteCount").textContent = note.value.length);
+
+    document.getElementById("checkout").onsubmit = async (e) => {
+      e.preventDefault();
+      const f = e.target; const err = document.getElementById("err");
+      const bad = [...f.querySelectorAll("[required]")].filter((i) => !i.value.trim());
+      f.querySelectorAll(".input").forEach((i) => i.classList.remove("!border-[#B42318]"));
+      if (bad.length) {
+        bad.forEach((i) => i.classList.add("!border-[#B42318]"));
+        err.textContent = "Kırmızı işaretli alanları doldur, sonra tekrar gönder.";
+        err.classList.remove("hidden"); bad[0].focus(); return;
+      }
+      err.classList.add("hidden");
+      const v = (id) => document.getElementById(id).value.trim();
+      const order = {
+        items: L.map((l) => ({ id: l.p.id, name: l.p.name, price: l.p.price, qty: l.qty })),
+        total: sub + (D.fee || 0),
+        sender: { name: v("senderName"), phone: v("senderPhone") },
+        recipient: { name: v("recName"), phone: v("recPhone"), district: v("district"), neighborhood: v("neighborhood"), address: v("address") },
+        date: v("date"), slot: v("slot"), note: v("note"), anonymous: document.getElementById("anon").checked
+      };
+      const btn = f.querySelector("aside button.btn"); btn.disabled = true; btn.textContent = "Gönderiliyor…";
+      try {
+        const saved = await Store.addOrder(order);
+        Cart.clear();
+        success(saved);
+      } catch (x) {
+        btn.disabled = false; btn.textContent = "Siparişi Tamamla";
+        err.textContent = "Sipariş gönderilemedi. İnternet bağlantını kontrol et ya da WhatsApp'tan yaz."; err.classList.remove("hidden");
+      }
+    };
+  }
+
+  function success(o) {
+    const d = new Date(o.date).toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" });
+    const msg = [
+      `Merhaba, sitenizden sipariş verdim. Sipariş no: ${o.id}`,
+      ...o.items.map((i) => `• ${i.qty} x ${i.name}`),
+      `Toplam: ${money(o.total)}`,
+      `Teslimat: ${d}, ${o.slot}`,
+      `Alıcı: ${o.recipient.name}, ${o.recipient.district}`
+    ].join("\n");
+    main.innerHTML = `
+      <div class="max-w-2xl mx-auto text-center bg-petal px-6 py-14 sm:p-16">
+        <img src="assets/mark.png" alt="" class="w-20 mx-auto">
+        <h1 class="font-display text-4xl sm:text-5xl mt-6">Siparişin bize ulaştı.</h1>
+        <p class="mt-4 text-lg text-ink/80">Sipariş numaran <strong>${o.id}</strong>. ${esc(o.recipient.name)} için çiçeğin ${esc(d)}, ${esc(o.slot)} arasında yolda olacak.</p>
+        <p class="mt-3 text-ink/70">Ödeme ve teyit için kısa süre içinde seni arayacağız. Beklemek istemezsen WhatsApp'tan hemen yazabilirsin.</p>
+        <div class="mt-8 flex flex-wrap gap-3 justify-center">
+          <a href="${waLink(msg)}" target="_blank" rel="noopener" class="btn btn-primary">WhatsApp'tan onayla</a>
+          <a href="index.html" class="btn btn-ghost">Ana sayfaya dön</a>
+        </div>
+      </div>`;
+    window.scrollTo({ top: 0 });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
