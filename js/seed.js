@@ -254,6 +254,106 @@ window.LALEZAR_SEED = {
     "#FFFFFF"
    ],
    "description": "Büyük gri kadife kutuda yüzlerce lila gül ve ortasında beyaz güllerle çizilen bir hat, lila saten kurdeleyle tamamlanır. Unutulmaz bir sürpriz için."
+  },
+  {
+   "id": "lz11",
+   "name": "Pembe Kutuda Kala ve Antoryum",
+   "type": "kutuda-cicek",
+   "occasions": [
+    "dogum-gunu",
+    "yeni-bebek",
+    "tesekkur"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/pembe-kutuda-kala-antoryum.jpg",
+   "art": [
+    "#F4A7B9",
+    "#FFFFFF"
+   ],
+   "description": "Pembe kutuda beyaz kala çiçekleri, pembe antoryum ve krizantem, alstroemerya ve simbidyum orkide; mum çiçeğiyle tamamlanan pembe kurdeleli bir tasarım."
+  },
+  {
+   "id": "lz12",
+   "name": "Lila Sümbül ve Orkide Aranjmanı",
+   "type": "vazoda-aranjman",
+   "occasions": [
+    "acilis",
+    "yeni-is",
+    "dogum-gunu"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/lila-sumbul-orkide-aranjmani.jpg",
+   "art": [
+    "#8E7CC3",
+    "#F4A7B9"
+   ],
+   "description": "Taş görünümlü kupada mavi sümbüller, mor vanda orkideler, pembe şakayık ve alstroemeryalarla hazırlanan zengin bir aranjman. Mekânlara bahar havası katar."
+  },
+  {
+   "id": "lz13",
+   "name": "Düğünçiçeği ve Frezya Buketi",
+   "type": "buket",
+   "occasions": [
+    "sevgiliye",
+    "dogum-gunu",
+    "tesekkur"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/duguncicegi-frezya-buketi.jpg",
+   "art": [
+    "#B0164E",
+    "#FFFFFF"
+   ],
+   "description": "Pembe ve fuşya düğünçiçekleri ile mis kokulu beyaz frezyaların koyu kâğıda sarıldığı romantik bir buket."
+  },
+  {
+   "id": "lz14",
+   "name": "Mor Lale Buketi",
+   "type": "buket",
+   "occasions": [
+    "sevgiliye",
+    "dogum-gunu",
+    "tesekkur"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/mor-lale-buketi.jpg",
+   "art": [
+    "#7B2D8E",
+    "#FFFFFF"
+   ],
+   "description": "Onlarca mor lalenin mor kâğıda sarıldığı, bol ve canlı bir buket."
+  },
+  {
+   "id": "lz15",
+   "name": "Lila Tonlarda Orkideli Aranjman",
+   "type": "vazoda-aranjman",
+   "occasions": [
+    "tesekkur",
+    "gecmis-olsun",
+    "yeni-is"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/lila-orkideli-seramik-aranjman.jpg",
+   "art": [
+    "#C9A0C8",
+    "#F7C6A3"
+   ],
+   "description": "Yeşil seramik saksıda lila krizantem ve güller, şeftali karanfiller, vanda orkideler, mor kala ve sarkan amarantla hazırlanan pastel tonlarda bir aranjman."
   }
  ],
  "heroSlides": [
