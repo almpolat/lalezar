@@ -35,7 +35,7 @@ window.LALEZAR_CONFIG = {
 
   delivery: {
     headline: "İstanbul içi aynı gün teslimat",
-    cutoff: "",  // örn: "15.00" — girilirse "15.00'e kadar verilen siparişler" yazar
+    cutoff: "13.00",  // bu saate kadar verilen siparişler aynı gün teslim edilir (İstanbul saati)
     slots: ["10.00 – 13.00", "13.00 – 16.00", "16.00 – 19.00", "19.00 – 21.00"],
     fee: 0       // 0 ise "Ücretsiz" yazar
   }

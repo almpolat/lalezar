@@ -59,7 +59,7 @@
         <a href="${waLink(`Merhaba, "${p.name}" hakkında bilgi almak istiyorum.`)}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 mt-4 text-sm underline underline-offset-4">${UI.icon.wa} WhatsApp'tan bilgi al</a>
         <div class="mt-8 border-t border-line">
           ${acc("Ürün Açıklaması", esc(p.description), true)}
-          ${acc("Teslimat Koşulları", `İstanbul içi aynı gün teslimat yapılır. Teslimat günü ve saat aralığını sipariş sırasında seçersiniz. Özel günlerde yoğunluk nedeniyle saat aralığı değişebilir, bu durumda sizi önceden bilgilendiririz.`)}
+          ${acc("Teslimat Koşulları", `İstanbul içi, saat ${esc(UI.cutoffText())}'e kadar verilen siparişler aynı gün teslim edilir; bu saatten sonraki siparişler en erken ertesi gün teslim edilir. Teslimat günü ve saat aralığını sipariş sırasında seçersiniz. Özel günlerde yoğunluk nedeniyle saat aralığı değişebilir, bu durumda sizi önceden bilgilendiririz.`)}
           ${acc("Çiçek Bakımı", `Vazo suyunu her gün tazeleyin, sapları keskin bir bıçakla çapraz kesin. Çiçeği doğrudan güneş, kalorifer ve meyve tabağından uzak tutun. Orkideleri haftada bir, saksı altından suyla besleyin.`)}
           ${acc("Görsel Hakkında", `Çiçekler doğal ürün olduğu için mevsime göre renk ve türde küçük farklılıklar olabilir. Tasarımın genel görünümü ve değeri korunur.`)}
         </div>

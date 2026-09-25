@@ -43,7 +43,9 @@
       return;
     }
     const sub = L.reduce((a, l) => a + l.p.price * l.qty, 0);
-    const today = new Date(); const iso = (d) => d.toISOString().slice(0, 10);
+    // Aynı gün: kesim saatinden (config.delivery.cutoff) sonra en erken yarın; bugün için başlamış aralıklar seçilemez
+    const sd = UI.sameDay(); const minDate = sd.open ? sd.today : UI.addDays(sd.today, 1);
+    const slotsFor = (date) => D.slots.filter((s) => date !== sd.today || UI.toMin(s) > sd.nowMin);
     main.innerHTML = `
       <h1 class="font-display text-5xl text-center mb-12">Sepetim</h1>
       <form id="checkout" class="grid lg:grid-cols-[1.35fr_1fr] gap-8 lg:gap-12 items-start" novalidate>
@@ -88,8 +90,9 @@
           <section>
             <h2 class="font-display text-3xl mb-5">Teslimat ve kart notu</h2>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div><label class="label" for="date">Teslimat günü</label><input class="input" id="date" type="date" min="${iso(today)}" value="${iso(today)}" required></div>
-              <div><label class="label" for="slot">Saat aralığı</label><select class="input" id="slot" required>${D.slots.map((s) => `<option>${esc(s)}</option>`).join("")}</select></div>
+              <div><label class="label" for="date">Teslimat günü</label><input class="input" id="date" type="date" min="${minDate}" value="${minDate}" required></div>
+              <div><label class="label" for="slot">Saat aralığı</label><select class="input" id="slot" required>${slotsFor(minDate).map((s) => `<option>${esc(s)}</option>`).join("")}</select></div>
+              <p class="sm:col-span-2 text-sm text-ink/60 -mt-1">${sd.open ? `Bugün teslimat için siparişini saat ${esc(UI.cutoffText())}'e kadar ver.` : `Saat ${esc(UI.cutoffText())}'ten sonra verilen siparişler en erken yarın teslim edilir.`}</p>
               <div class="sm:col-span-2"><label class="label" for="note">Karta yazılacak mesaj <span class="font-normal text-ink/50">(isteğe bağlı)</span></label><textarea class="input" id="note" rows="3" maxlength="300" placeholder="İyi ki doğdun…"></textarea><p class="text-xs text-ink/50 mt-1"><span id="noteCount">0</span>/300</p></div>
               <label class="sm:col-span-2 flex items-center gap-3 text-sm"><input type="checkbox" id="anon" class="w-5 h-5 accent-orange"> İsmim kartta yazmasın</label>
             </div>
@@ -113,6 +116,8 @@
     main.querySelectorAll("[data-inc]").forEach((b) => b.onclick = () => { const it = Cart.items().find((x) => x.id === b.dataset.inc); Cart.setQty(it.id, it.qty + 1); render(); });
     main.querySelectorAll("[data-dec]").forEach((b) => b.onclick = () => { const it = Cart.items().find((x) => x.id === b.dataset.dec); Cart.setQty(it.id, it.qty - 1); render(); });
     document.getElementById("clear-cart").onclick = () => { Cart.clear(); render(); };
+    const dateEl = document.getElementById("date"), slotEl = document.getElementById("slot");
+    dateEl.onchange = () => { slotEl.innerHTML = slotsFor(dateEl.value).map((s) => `<option>${esc(s)}</option>`).join(""); };
     const note = document.getElementById("note");
     note.oninput = () => (document.getElementById("noteCount").textContent = note.value.length);
 
@@ -125,6 +130,13 @@
         bad.forEach((i) => i.classList.add("!border-[#B42318]"));
         err.textContent = "Kırmızı işaretli alanları doldur, sonra tekrar gönder.";
         err.classList.remove("hidden"); bad[0].focus(); return;
+      }
+      // Sayfa açık kalıp kesim saati geçtiyse bugünü kabul etme
+      const nowSd = UI.sameDay(), earliest = nowSd.open ? nowSd.today : UI.addDays(nowSd.today, 1);
+      if (dateEl.value < earliest) {
+        dateEl.min = earliest; dateEl.classList.add("!border-[#B42318]");
+        err.textContent = `Bugün teslimat için sipariş saati (${UI.cutoffText()}) geçti. Lütfen yarın ya da sonraki bir günü seç.`;
+        err.classList.remove("hidden"); dateEl.focus(); return;
       }
       err.classList.add("hidden");
       const v = (id) => document.getElementById(id).value.trim();

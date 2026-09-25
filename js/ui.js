@@ -276,13 +276,24 @@
     startCountdown();
   }
 
+  // ---------------- AYNI GÜN TESLİMAT ----------------
+  // Saatler her zaman İstanbul saatine göre hesaplanır (ziyaretçinin saat diliminden bağımsız)
+  const toMin = (s) => { const [h, m] = String(s).split(/[.:]/).map((n) => parseInt(n, 10) || 0); return h * 60 + m; };
+  function sameDay() {
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Istanbul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+      .formatToParts(new Date()).map((x) => [x.type, x.value]));
+    const today = `${p.year}-${p.month}-${p.day}`, nowMin = +p.hour * 60 + +p.minute;
+    const left = toMin(CFG.delivery.cutoff || "17:00") - nowMin;
+    return { today, nowMin, left, open: left > 0 };
+  }
+  const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const cutoffText = () => CFG.delivery.cutoff || "17.00";
+
   // Bugün teslimat için kalan süre (config.delivery.cutoff, boşsa 17:00)
   function startCountdown() {
     const band = $("#cutoff-band"); if (!band) return;
-    const [h, m] = String(CFG.delivery.cutoff || "17:00").split(/[.:]/).map((n) => parseInt(n, 10) || 0);
     const tick = () => {
-      const now = new Date(), end = new Date(now); end.setHours(h, m, 0, 0);
-      const left = Math.floor((end - now) / 60000);
+      const { left } = sameDay();
       band.innerHTML = left > 0
         ? `Bugün teslimat için kalan süre: <strong class="font-semibold text-orange">${Math.floor(left / 60)} sa ${left % 60} dk</strong>`
         : `<a href="kategori.html" class="underline underline-offset-4 hover:text-orange">Yarın teslimat için sipariş ver</a>`;
@@ -340,6 +351,9 @@
       <a href="${waLink("Merhaba, çiçek siparişi vermek istiyorum.")}" target="_blank" rel="noopener" class="fixed right-5 bottom-5 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-lg hover:scale-105 transition-transform" aria-label="WhatsApp'tan sipariş ver">${icon.wa.replace('width="20" height="20"', 'width="28" height="28"')}</a>`;
   }
 
-  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, inType, Cart, Favs, toast, renderHeader, renderFooter, icon, mix };
-  document.addEventListener("DOMContentLoaded", () => { renderHeader(); renderFooter(); });
+  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, inType, sameDay, addDays, toMin, cutoffText, Cart, Favs, toast, renderHeader, renderFooter, icon, mix };
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-cutoff]").forEach((el) => (el.textContent = cutoffText()));
+    renderHeader(); renderFooter();
+  });
 })();
