@@ -29,6 +29,11 @@
     <div id="dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2"></div>
   </section>
 
+  <!-- KAMPANYA BANNER -->
+  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-8">
+    <div id="promos" class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6"></div>
+  </section>
+
   <!-- KOLEKSİYONLAR -->
   <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-20">
     <p class="section-sub">Koleksiyonlar</p>
@@ -41,12 +46,13 @@
     <p class="section-sub">Öne Çıkanlar</p>
     <h2 class="section-title">En Çok Tercih Edilenler</h2>
     <p class="text-center text-ink/60 mt-3">Sevdiklerinize özel aranjman ve buketler</p>
+    <div id="feat-tabs" class="flex gap-6 sm:gap-8 overflow-x-auto no-scrollbar mt-8 border-b border-line sm:justify-center" role="tablist"></div>
     <div id="featured" class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12 mt-10"></div>
     <div class="text-center mt-12"><a href="kategori.html" class="btn btn-outline">Tüm Ürünleri Görüntüle</a></div>
   </section>
 
   <!-- KİME ÇİÇEK -->
-  <section class="bg-mist mt-24 py-20">
+  <section class="bg-[#FCEEE4] mt-24 py-20">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-8">
       <p class="section-sub">Gönderim Sebebi</p>
       <h2 class="section-title">Kime Çiçek Göndereceksiniz?</h2>
@@ -80,7 +86,7 @@
   </section>
 
   <!-- GÜVEN -->
-  <section class="border-y border-line mt-24">
+  <section class="bg-[#F3F6E0] mt-24">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-8 py-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
       <div><svg class="mx-auto" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="4" y="10" width="16" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><p class="mt-3 text-[13px] tracking-[.14em] uppercase">Güvenli Alışveriş</p><p class="text-sm text-ink/60 mt-1">Bilgileriniz SSL ile korunur.</p></div>
       <div><svg class="mx-auto" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><p class="mt-3 text-[13px] tracking-[.14em] uppercase">Hızlı Teslimat</p><p class="text-sm text-ink/60 mt-1">İstanbul içi aynı gün.</p></div>
@@ -89,8 +95,17 @@
     </div>
   </section>
 
+  <!-- MÜŞTERİ YORUMLARI -->
+  <section class="bg-[#FCEEE4] mt-24 py-20">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-8">
+      <p class="section-sub">Yorumlar</p>
+      <h2 class="section-title">Müşterilerimiz Ne Diyor</h2>
+      <div id="reviews" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-10"></div>
+    </div>
+  </section>
+
   <!-- INSTAGRAM -->
-  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-24">
+  <section class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-20">
     <p class="section-sub">Bizi Takip Edin</p>
     <h2 class="section-title"><a id="ig-title" href="#" target="_blank" rel="noopener" class="hover:text-orange"></a></h2>
     <div id="insta" class="grid grid-cols-3 lg:grid-cols-6 gap-2 mt-10"></div>
@@ -153,6 +168,23 @@
   const [products, cats] = await Promise.all([Store.listProducts(), Store.getCategories()]);
   const active = products.filter((p) => p.active !== false);
 
+  // Kampanya banner'ı (görseller seed'deki ürün fotoğraflarından)
+  const seedImg = (id) => (LALEZAR_SEED.products.find((p) => p.id === id) || {}).image || "";
+  const promos = [
+    { title: "Sevgiliye Güller", img: seedImg("p05"), link: "kategori.html?tur=gul" },
+    { title: "Orkide Koleksiyonu", img: seedImg("p06"), link: "kategori.html?tur=orkide" },
+    { title: "Doğum Günü Çiçekleri", img: seedImg("p01"), link: "kategori.html?sebep=dogum-gunu" }
+  ];
+  document.getElementById("promos").innerHTML = promos.map((b) => `
+    <a href="${b.link}" class="group relative block aspect-[4/3] overflow-hidden bg-mist">
+      <img src="${esc(b.img)}" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+      <span class="absolute inset-0 bg-black/30"></span>
+      <div class="relative h-full flex flex-col items-center justify-center text-center text-white p-6">
+        <h3 class="font-display text-3xl sm:text-[34px] leading-tight">${esc(b.title)}</h3>
+        <span class="btn btn-white mt-5 !py-3 !px-6 !text-xs">Keşfet</span>
+      </div>
+    </a>`).join("");
+
   // Koleksiyonlar
   document.getElementById("collections").innerHTML = cats.types.slice(0, 4).map((c) => {
     const list = active.filter((x) => x.type === c.slug);
@@ -168,8 +200,17 @@
   const want = Math.min(8, Math.max(4, Math.ceil(feat.length / 4) * 4));
   const list = [...feat, ...rest].slice(0, want);
   const fEl = document.getElementById("featured");
-  fEl.innerHTML = list.map(productCard).join("");
-  bindAddButtons(fEl, list);
+  const tabs = [["", "Tümü"], ["buket", "Buketler"], ["orkide", "Orkideler"], ["gul", "Güller"], ["kutuda-cicek", "Kutuda"]];
+  const tEl = document.getElementById("feat-tabs");
+  tEl.innerHTML = tabs.map(([k, n], i) => `<button type="button" role="tab" data-tab="${k}" class="tab-btn ${i ? "" : "on"}" aria-selected="${!i}">${n}</button>`).join("");
+  const showTab = (k) => {
+    const items = k ? active.filter((p) => p.type === k).slice(0, 8) : list;
+    fEl.innerHTML = items.length ? items.map(productCard).join("") : `<p class="col-span-full text-center text-ink/60">Bu kategoride ürün yok.</p>`;
+    bindAddButtons(fEl, items);
+    tEl.querySelectorAll(".tab-btn").forEach((b) => { const on = b.dataset.tab === k; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
+  };
+  tEl.onclick = (e) => { const b = e.target.closest("[data-tab]"); if (b) showTab(b.dataset.tab); };
+  showTab("");
 
   // Kime çiçek
   document.getElementById("occasions").innerHTML = cats.occasions.map((o) => {
@@ -184,6 +225,21 @@
   const oEl = document.getElementById("orchids");
   if (orch.length) { oEl.innerHTML = orch.map(productCard).join(""); bindAddButtons(oEl, orch); }
   else oEl.closest("section").remove();
+
+  // Müşteri yorumları — ÖRNEK yorumlar, gerçek yorumlarla değiştir
+  const reviews = [
+    { name: "Elif K.", text: "Annemin doğum günü için sipariş verdim, aynı gün öğleden sonra teslim edildi. Buket fotoğraftakinden bile güzeldi." },
+    { name: "Murat D.", text: "Kart notunu da özenle yazmışlar. Güller bir hafta boyunca taptaze kaldı, kesinlikle tekrar sipariş vereceğim." },
+    { name: "Selin A.", text: "Ofise orkide gönderdim, paketleme çok şıktı. WhatsApp'tan hızlıca dönüş yaptılar, çok ilgililer." },
+    { name: "Burak T.", text: "Son dakika sipariş vermeme rağmen yetiştirdiler. Kadıköy'de güvenebileceğim tek çiçekçi." }
+  ];
+  const star = `<svg width="16" height="16" viewBox="0 0 24 24" fill="#E8850A" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg>`;
+  document.getElementById("reviews").innerHTML = reviews.map((r) => `
+    <figure class="bg-white p-6 sm:p-7 h-full flex flex-col">
+      <div class="flex gap-1" aria-label="5 yıldız">${star.repeat(5)}</div>
+      <blockquote class="mt-4 text-ink/75 leading-relaxed flex-1">“${esc(r.text)}”</blockquote>
+      <figcaption class="mt-5 text-[13px] tracking-[.14em] uppercase">${esc(r.name)}</figcaption>
+    </figure>`).join("");
 
   // Instagram
   const ig = `https://www.instagram.com/${S.instagram}/`;

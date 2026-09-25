@@ -1,5 +1,5 @@
 html { scroll-behavior: smooth; }
-body { font-family: Jost, system-ui, sans-serif; color: #1E1E1E; background: #fff; -webkit-font-smoothing: antialiased; }
+body { font-family: Jost, system-ui, sans-serif; color: #1E1E1E; background: #fff; font-size: 17px; -webkit-font-smoothing: antialiased; }
 .font-display { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; letter-spacing: .005em; }
 :focus-visible { outline: 2px solid #E8850A; outline-offset: 2px; }
 
@@ -26,9 +26,9 @@ body { font-family: Jost, system-ui, sans-serif; color: #1E1E1E; background: #ff
 .btn-dark { background: #1E1E1E; color: #fff; }
 .btn-dark:hover { background: #E8850A; }
 .btn-outline { border-color: #1E1E1E; color: #1E1E1E; background: transparent; }
-.btn-outline:hover { background: #1E1E1E; color: #fff; }
+.btn-outline:hover { background: #E8850A; border-color: #E8850A; color: #fff; }
 .btn-white { border-color: #fff; color: #fff; }
-.btn-white:hover { background: #fff; color: #1E1E1E; }
+.btn-white:hover { background: #E8850A; border-color: #E8850A; color: #fff; }
 
 /* Form */
 .input { width: 100%; border: 1px solid #D6D2CB; padding: 13px 14px; font-size: 15px; background: #fff; }
@@ -36,7 +36,7 @@ body { font-family: Jost, system-ui, sans-serif; color: #1E1E1E; background: #ff
 .label { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; color: rgba(30,30,30,.75); }
 
 /* Başlıklar */
-.section-title { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(30px, 4vw, 44px); line-height: 1.1; text-align: center; }
+.section-title { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(37px, 5vw, 55px); line-height: 1.1; text-align: center; }
 .section-sub { text-align: center; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: rgba(30,30,30,.55); margin-bottom: 10px; }
 
 /* Slider */
@@ -53,4 +53,14 @@ details[open] .plus { transform: rotate(45deg); }
 .btn-primary { background: #1E1E1E; color: #fff; }
 .btn-primary:hover { background: #E8850A; }
 .btn-ghost { border-color: #1E1E1E; }
-.btn-ghost:hover { background: #1E1E1E; color: #fff; }
+.btn-ghost:hover { background: #E8850A; border-color: #E8850A; color: #fff; }
+
+/* Favori kalbi */
+.fav-btn svg { fill: none; }
+.fav-btn:hover, .fav-btn.is-on { color: #D62828; }
+.fav-btn.is-on svg { fill: currentColor; }
+
+/* Ürün sekmeleri */
+.tab-btn { padding: 8px 2px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: rgba(30,30,30,.55); border-bottom: 2px solid transparent; white-space: nowrap; }
+.tab-btn:hover { color: #E8850A; }
+.tab-btn.on { color: #1E1E1E; border-color: #E8850A; }

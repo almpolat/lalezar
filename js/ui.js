@@ -136,17 +136,45 @@
   }
 
   // ---------------- ÜRÜN KARTI ----------------
+  const FAV_KEY = "lz_favs";
+  const Favs = {
+    list() { try { return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch (e) { return []; } },
+    has(id) { return Favs.list().includes(id); },
+    toggle(id) {
+      let l = Favs.list(); l = l.includes(id) ? l.filter((x) => x !== id) : [...l, id];
+      try { localStorage.setItem(FAV_KEY, JSON.stringify(l)); } catch (e) {}
+      return l.includes(id);
+    }
+  };
+  const heartSvg = `<svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></svg>`;
+  // Kalp ikonları tüm sayfalarda tek yerden dinlenir
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-fav]"); if (!b) return;
+    e.preventDefault();
+    const on = Favs.toggle(b.dataset.fav);
+    b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on);
+  });
+
   function productCard(p) {
     const sale = p.oldPrice && p.oldPrice > p.price;
+    const pct = sale ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
     const url = `urun.html?id=${encodeURIComponent(p.id)}`;
+    const fav = Favs.has(p.id);
     return `<article class="group text-center">
-      <a href="${url}" class="block aspect-square overflow-hidden bg-mist relative">
-        <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">${productImage(p)}</div>
-        ${sale ? `<span class="absolute top-3 left-3 bg-orange text-white text-[11px] tracking-wider uppercase px-2.5 py-1">İndirim</span>` : ""}
-      </a>
-      <h3 class="mt-4 text-[15px] leading-snug"><a href="${url}" class="hover:underline underline-offset-4">${esc(p.name)}</a></h3>
-      <p class="mt-1 text-[15px]">${sale ? `<s class="text-ink/45 mr-2">${money(p.oldPrice)}</s>` : ""}<span class="${sale ? "text-orange" : ""}">${money(p.price)}</span></p>
+      <div class="relative">
+        <a href="${url}" class="block aspect-square overflow-hidden bg-mist">
+          <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">${productImage(p)}</div>
+        </a>
+        <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5 pointer-events-none">
+          ${p.featured ? `<span class="bg-orange text-white text-[11px] tracking-wider uppercase px-2.5 py-1">Çok Satan</span>` : ""}
+          ${sale ? `<span class="bg-[#D62828] text-white text-[11px] tracking-wider uppercase px-2.5 py-1">%${pct} İndirim</span>` : ""}
+        </div>
+        <button type="button" data-fav="${esc(p.id)}" class="fav-btn absolute top-2 right-2 w-10 h-10 grid place-items-center bg-white/85 hover:bg-white ${fav ? "is-on" : ""}" aria-pressed="${fav}" aria-label="Favorilere ekle">${heartSvg}</button>
+      </div>
+      <h3 class="mt-4 text-[18px] leading-snug"><a href="${url}" class="hover:underline underline-offset-4">${esc(p.name)}</a></h3>
+      <p class="mt-1 text-[19px] font-semibold">${sale ? `<s class="text-ink/45 font-normal text-[15px] mr-2">${money(p.oldPrice)}</s>` : ""}<span class="${sale ? "text-[#D62828]" : ""}">${money(p.price)}</span></p>
       <button data-add="${esc(p.id)}" class="btn btn-outline w-full mt-3 !py-2.5 !text-xs">Sepete Ekle</button>
+      <p class="mt-2 text-[12px] tracking-wide text-[#3F7D20]">Aynı Gün Teslimat</p>
     </article>`;
   }
   function bindAddButtons(root, products) {
@@ -184,7 +212,7 @@
         <a href="kategori.html?tur=buket" class="block group"><div class="aspect-[4/3] overflow-hidden bg-mist"><img src="https://images.unsplash.com/photo-1523693916903-027d144a2b7d?auto=format&fit=crop&w=600&h=450&q=70" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"></div><p class="mt-3 tracking-[.18em] uppercase text-[12px]">Buketleri keşfet</p></a>
       </div>`;
     el.innerHTML = `
-      <div class="bg-ink text-white text-[12px] tracking-[.12em] uppercase overflow-hidden whitespace-nowrap py-2.5"><div class="marquee inline-block">${run}</div></div>
+      <div class="bg-orange text-white text-[12px] tracking-[.12em] uppercase overflow-hidden whitespace-nowrap py-2.5"><div class="marquee inline-block">${run}</div></div>
       <header class="bg-white border-b border-line sticky top-0 z-40">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-8 h-[84px] grid grid-cols-[1fr_auto_1fr] items-center">
           <div class="flex items-center gap-4">
@@ -200,7 +228,7 @@
           </div>
         </div>
         <nav class="hidden lg:block" aria-label="Ana menü">
-          <ul class="flex justify-center gap-9 text-[13px] tracking-[.14em] uppercase h-12 items-center">
+          <ul class="flex justify-center gap-9 text-[14px] tracking-[.14em] uppercase h-12 items-center">
             <li class="mega-parent h-full flex items-center"><a href="kategori.html" class="nav-link flex items-center gap-1.5">Çiçekler ${icon.down}</a>
               <div class="mega absolute left-0 right-0 top-full bg-white border-y border-line normal-case tracking-normal">${mega}</div></li>
             ${cats.types.slice(0, 4).map((c) => `<li><a href="kategori.html?tur=${c.slug}" class="nav-link">${esc(c.name)}</a></li>`).join("")}
@@ -215,6 +243,7 @@
           </form>
         </div>
       </header>
+      <div class="border-b border-line bg-white text-center text-[13px] sm:text-[14px] tracking-wide py-2 px-4"><span id="cutoff-band"></span></div>
       <div id="drawer" class="fixed inset-0 z-50 hidden">
         <div class="absolute inset-0 bg-black/40" data-close></div>
         <aside class="absolute left-0 top-0 bottom-0 w-[86%] max-w-sm bg-white overflow-y-auto">
@@ -236,6 +265,21 @@
     $("#search-btn").onclick = openSearch; $("#search-btn-m").onclick = openSearch;
     $("#search-close").onclick = () => sp.classList.add("hidden");
     Cart.badge();
+    startCountdown();
+  }
+
+  // Bugün teslimat için kalan süre (config.delivery.cutoff, boşsa 17:00)
+  function startCountdown() {
+    const band = $("#cutoff-band"); if (!band) return;
+    const [h, m] = String(CFG.delivery.cutoff || "17:00").split(/[.:]/).map((n) => parseInt(n, 10) || 0);
+    const tick = () => {
+      const now = new Date(), end = new Date(now); end.setHours(h, m, 0, 0);
+      const left = Math.floor((end - now) / 60000);
+      band.innerHTML = left > 0
+        ? `Bugün teslimat için kalan süre: <strong class="font-semibold text-orange">${Math.floor(left / 60)} sa ${left % 60} dk</strong>`
+        : `<a href="kategori.html" class="underline underline-offset-4 hover:text-orange">Yarın teslimat için sipariş ver</a>`;
+    };
+    tick(); setInterval(tick, 30000);
   }
 
   // ---------------- ALT BİLGİ ----------------
@@ -288,6 +332,6 @@
       <a href="${waLink("Merhaba, çiçek siparişi vermek istiyorum.")}" target="_blank" rel="noopener" class="fixed right-5 bottom-5 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-lg hover:scale-105 transition-transform" aria-label="WhatsApp'tan sipariş ver">${icon.wa.replace('width="20" height="20"', 'width="28" height="28"')}</a>`;
   }
 
-  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, Cart, toast, renderHeader, renderFooter, icon, mix };
+  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, Cart, Favs, toast, renderHeader, renderFooter, icon, mix };
   document.addEventListener("DOMContentLoaded", () => { renderHeader(); renderFooter(); });
 })();
