@@ -106,6 +106,14 @@
     return `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" class="w-full h-full object-cover ${cls}" onerror="this.outerHTML=UI.art(${esc(JSON.stringify({ id: p.id, name: p.name, type: p.type, art: p.art }))})">`;
   }
 
+  // Ürün kategoride mi? Adında "gül"/"orkide" geçenler o kategoride de listelenir (örn. kutuda güller)
+  const NAME_MATCH = { gul: "gül", orkide: "orkide" };
+  function inType(p, slug) {
+    if (p.type === slug) return true;
+    const w = NAME_MATCH[slug];
+    return !!w && String(p.name || "").toLocaleLowerCase("tr").includes(w);
+  }
+
   // ---------------- SEPET ----------------
   const CART_KEY = "lz_cart";
   const Cart = {
@@ -332,6 +340,6 @@
       <a href="${waLink("Merhaba, çiçek siparişi vermek istiyorum.")}" target="_blank" rel="noopener" class="fixed right-5 bottom-5 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-lg hover:scale-105 transition-transform" aria-label="WhatsApp'tan sipariş ver">${icon.wa.replace('width="20" height="20"', 'width="28" height="28"')}</a>`;
   }
 
-  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, Cart, Favs, toast, renderHeader, renderFooter, icon, mix };
+  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, inType, Cart, Favs, toast, renderHeader, renderFooter, icon, mix };
   document.addEventListener("DOMContentLoaded", () => { renderHeader(); renderFooter(); });
 })();

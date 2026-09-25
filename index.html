@@ -187,7 +187,7 @@
 
   // Koleksiyonlar
   document.getElementById("collections").innerHTML = cats.types.slice(0, 4).map((c) => {
-    const list = active.filter((x) => x.type === c.slug);
+    const list = active.filter((x) => UI.inType(x, c.slug));
     const p = list[0];
     return `<a href="kategori.html?tur=${c.slug}" class="group block">
       <div class="aspect-[3/4] overflow-hidden bg-mist">${p ? `<div class="w-full h-full transition-transform duration-700 group-hover:scale-105">${productImage(p)}</div>` : ""}</div>
@@ -204,7 +204,7 @@
   const tEl = document.getElementById("feat-tabs");
   tEl.innerHTML = tabs.map(([k, n], i) => `<button type="button" role="tab" data-tab="${k}" class="tab-btn ${i ? "" : "on"}" aria-selected="${!i}">${n}</button>`).join("");
   const showTab = (k) => {
-    const items = k ? active.filter((p) => p.type === k).slice(0, 8) : list;
+    const items = k ? active.filter((p) => UI.inType(p, k)).slice(0, 8) : list;
     fEl.innerHTML = items.length ? items.map(productCard).join("") : `<p class="col-span-full text-center text-ink/60">Bu kategoride ürün yok.</p>`;
     bindAddButtons(fEl, items);
     tEl.querySelectorAll(".tab-btn").forEach((b) => { const on = b.dataset.tab === k; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
@@ -221,7 +221,7 @@
   }).join("");
 
   // Orkide satırı
-  const orch = active.filter((p) => p.type === "orkide").slice(0, 4);
+  const orch = active.filter((p) => UI.inType(p, "orkide")).slice(0, 4);
   const oEl = document.getElementById("orchids");
   if (orch.length) { oEl.innerHTML = orch.map(productCard).join(""); bindAddButtons(oEl, orch); }
   else oEl.closest("section").remove();

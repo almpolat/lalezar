@@ -47,7 +47,7 @@
   let list = products.filter((p) => p.active !== false);
   let title = "Tüm Çiçekler";
   const norm = (s) => String(s).toLocaleLowerCase("tr");
-  if (tur) { list = list.filter((p) => p.type === tur); title = (cats.types.find((c) => c.slug === tur) || {}).name || title; }
+  if (tur) { list = list.filter((p) => UI.inType(p, tur)); title = (cats.types.find((c) => c.slug === tur) || {}).name || title; }
   if (sebep) { list = list.filter((p) => (p.occasions || []).includes(sebep)); title = (cats.occasions.find((c) => c.slug === sebep) || {}).name || title; }
   if (q) { list = list.filter((p) => norm(p.name + " " + p.description).includes(norm(q))); title = `“${q}” için sonuçlar`; }
   document.getElementById("title").textContent = title;
