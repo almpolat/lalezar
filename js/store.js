@@ -24,7 +24,7 @@
   const demo = {
     async init() {
       // Katalog sürümü değişince eski demo verisi yenilenir
-      if (ls.get("lz_seed_v") !== 6) { ls.set(K.products, clone(SEED.products)); ls.set(K.cats, clone(SEED.categories)); ls.set("lz_seed_v", 6); }
+      if (ls.get("lz_seed_v") !== 7) { ls.set(K.products, clone(SEED.products)); ls.set(K.cats, clone(SEED.categories)); ls.set("lz_cart", []); ls.set("lz_seed_v", 7); }
       if (!ls.get(K.products)) ls.set(K.products, clone(SEED.products));
       if (!ls.get(K.cats)) ls.set(K.cats, clone(SEED.categories));
     },

@@ -28,8 +28,12 @@
   const products = await Store.listProducts();
   const byId = Object.fromEntries(products.map((p) => [p.id, p]));
 
+  // Katalogda olmayan, pasif ya da adedi geçersiz satırlar sepetten silinir (sayaç da düzelir)
   function lines() {
-    return Cart.items().map((it) => ({ ...it, p: byId[it.id] })).filter((l) => l.p && l.p.active !== false);
+    const items = Cart.items();
+    const ok = items.filter((it) => byId[it.id] && byId[it.id].active !== false && it.qty > 0);
+    if (ok.length !== items.length) Cart.save(ok);
+    return ok.map((it) => ({ ...it, p: byId[it.id] }));
   }
 
   function render() {
@@ -59,6 +63,7 @@
                 <p class="w-32 text-right whitespace-nowrap hidden sm:block">${money(l.p.price * l.qty)}</p>
               </li>`).join("")}
             </ul>
+            <button type="button" id="clear-cart" class="mt-4 text-sm underline underline-offset-2 text-ink/60 hover:text-orange">Sepeti boşalt</button>
           </section>
 
           <section>
@@ -107,6 +112,7 @@
     main.querySelectorAll("[data-remove]").forEach((b) => b.onclick = () => { Cart.setQty(b.dataset.remove, 0); render(); });
     main.querySelectorAll("[data-inc]").forEach((b) => b.onclick = () => { const it = Cart.items().find((x) => x.id === b.dataset.inc); Cart.setQty(it.id, it.qty + 1); render(); });
     main.querySelectorAll("[data-dec]").forEach((b) => b.onclick = () => { const it = Cart.items().find((x) => x.id === b.dataset.dec); Cart.setQty(it.id, it.qty - 1); render(); });
+    document.getElementById("clear-cart").onclick = () => { Cart.clear(); render(); };
     const note = document.getElementById("note");
     note.oninput = () => (document.getElementById("noteCount").textContent = note.value.length);
 

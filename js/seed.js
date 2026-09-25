@@ -57,7 +57,7 @@ window.LALEZAR_SEED = {
  },
  "products": [
   {
-   "id": "lz01",
+   "id": "u01",
    "name": "Buda Vazoda Pastel Aranjman",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -77,7 +77,7 @@ window.LALEZAR_SEED = {
    "description": "Turkuaz seramik Buda vazoda; pembe alstroemerya ve lisyantuslar, mavi krizantemler ve mor vanda orkideyle hazırlanan gösterişli bir aranjman. Yeni bir mekâna huzur katan kalıcı bir hediye."
   },
   {
-   "id": "lz02",
+   "id": "u02",
    "name": "Pembe Kadife Kutu",
    "type": "kutuda-cicek",
    "occasions": [
@@ -97,7 +97,7 @@ window.LALEZAR_SEED = {
    "description": "Pembe kadife kutuda pembe lisyantus, mini güller, pembe gül ve beyaz krizantem. Yumuşak tonlarıyla doğum günleri ve yeni bebek kutlamaları için zarif bir seçim."
   },
   {
-   "id": "lz03",
+   "id": "u03",
    "name": "Pembe Antoryum Buketi",
    "type": "buket",
    "occasions": [
@@ -117,7 +117,7 @@ window.LALEZAR_SEED = {
    "description": "Pembe antoryumlar, pembe krizantem ve karanfiller, beyaz lisyantus ve okaliptüsle hazırlanan, pembe kâğıda sarılı modern bir buket."
   },
   {
-   "id": "lz04",
+   "id": "u04",
    "name": "Pembe Şakayık Buketi",
    "type": "buket",
    "occasions": [
@@ -137,7 +137,7 @@ window.LALEZAR_SEED = {
    "description": "Mevsiminde açan pembe şakayıklardan bol ve dolgun bir buket. Tomurcukları gün geçtikçe açılarak evinizi şenlendirir."
   },
   {
-   "id": "lz05",
+   "id": "u05",
    "name": "Siyah Kutuda Kırmızı Güller",
    "type": "kutuda-cicek",
    "occasions": [
@@ -156,7 +156,7 @@ window.LALEZAR_SEED = {
    "description": "Lalezar logolu siyah kadife kutuda, siyah kurdeleyle tamamlanan kırmızı güller. Sevgiliye klasik ve şık bir jest."
   },
   {
-   "id": "lz06",
+   "id": "u06",
    "name": "Altın Vazoda Sarı Orkideli Aranjman",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -176,7 +176,7 @@ window.LALEZAR_SEED = {
    "description": "Altın dokulu vazoda sarı simbidyum orkideler, turuncu krizantem ve güller, altın yelpaze yapraklar ve sarkan amarantlarla hazırlanan gösterişli bir aranjman. Açılış ve tebrikler için iddialı bir hediye."
   },
   {
-   "id": "lz07",
+   "id": "u07",
    "name": "Cam Vazoda Kırmızı Kokina",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -196,7 +196,7 @@ window.LALEZAR_SEED = {
    "description": "İçi kırmızı kokina taneleriyle dolu cam vazoda, bol ve dolgun kırmızı kokina dalları. Uzun süre dayanan, özellikle kış aylarının vazgeçilmez hediyesi."
   },
   {
-   "id": "lz08",
+   "id": "u08",
    "name": "Fener Çiçeği Sonbahar Aranjmanı",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -216,7 +216,7 @@ window.LALEZAR_SEED = {
    "description": "Seramik kasede turuncu fener çiçekleri, kırmızı kuşburnu, bordo antoryum, sarı dalya, turuncu güller ve kuru okaliptüsle hazırlanan sonbahar tonlarında bir aranjman."
   },
   {
-   "id": "lz09",
+   "id": "u09",
    "name": "Beyaz Lale Buketi",
    "type": "buket",
    "occasions": [
@@ -236,7 +236,7 @@ window.LALEZAR_SEED = {
    "description": "Bembeyaz lalelerden oluşan, gri kâğıda sarılıp beyaz kurdeleyle bağlanan sade ve zarif bir buket."
   },
   {
-   "id": "lz10",
+   "id": "u10",
    "name": "Gri Kutuda Lila Güller",
    "type": "kutuda-cicek",
    "occasions": [
@@ -256,7 +256,7 @@ window.LALEZAR_SEED = {
    "description": "Büyük gri kadife kutuda yüzlerce lila gül ve ortasında beyaz güllerle çizilen bir hat, lila saten kurdeleyle tamamlanır. Unutulmaz bir sürpriz için."
   },
   {
-   "id": "lz11",
+   "id": "u11",
    "name": "Pembe Kutuda Kala ve Antoryum",
    "type": "kutuda-cicek",
    "occasions": [
@@ -276,7 +276,7 @@ window.LALEZAR_SEED = {
    "description": "Pembe kutuda beyaz kala çiçekleri, pembe antoryum ve krizantem, alstroemerya ve simbidyum orkide; mum çiçeğiyle tamamlanan pembe kurdeleli bir tasarım."
   },
   {
-   "id": "lz12",
+   "id": "u12",
    "name": "Lila Sümbül ve Orkide Aranjmanı",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -296,7 +296,7 @@ window.LALEZAR_SEED = {
    "description": "Taş görünümlü kupada mavi sümbüller, mor vanda orkideler, pembe şakayık ve alstroemeryalarla hazırlanan zengin bir aranjman. Mekânlara bahar havası katar."
   },
   {
-   "id": "lz13",
+   "id": "u13",
    "name": "Düğünçiçeği ve Frezya Buketi",
    "type": "buket",
    "occasions": [
@@ -316,7 +316,7 @@ window.LALEZAR_SEED = {
    "description": "Pembe ve fuşya düğünçiçekleri ile mis kokulu beyaz frezyaların koyu kâğıda sarıldığı romantik bir buket."
   },
   {
-   "id": "lz14",
+   "id": "u14",
    "name": "Mor Lale Buketi",
    "type": "buket",
    "occasions": [
@@ -336,7 +336,7 @@ window.LALEZAR_SEED = {
    "description": "Onlarca mor lalenin mor kâğıda sarıldığı, bol ve canlı bir buket."
   },
   {
-   "id": "lz15",
+   "id": "u15",
    "name": "Lila Tonlarda Orkideli Aranjman",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -356,7 +356,7 @@ window.LALEZAR_SEED = {
    "description": "Yeşil seramik saksıda lila krizantem ve güller, şeftali karanfiller, vanda orkideler, mor kala ve sarkan amarantla hazırlanan pastel tonlarda bir aranjman."
   },
   {
-   "id": "lz16",
+   "id": "u16",
    "name": "Kozalaklı Yılbaşı Kutusu",
    "type": "kutuda-cicek",
    "occasions": [
@@ -376,7 +376,7 @@ window.LALEZAR_SEED = {
    "description": "Kahve tonlu kutuda altın yaldızlı kozalaklar, magnolya yaprakları, lotus kapsülü, kırmızı kokina ve çam dallarıyla hazırlanan yılbaşı tasarımı."
   },
   {
-   "id": "lz17",
+   "id": "u17",
    "name": "Kozalaklı Yılbaşı Ağacı",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -396,7 +396,7 @@ window.LALEZAR_SEED = {
    "description": "Taze çam dalları, kozalaklar, kırmızı kokina ve kırmızı asparagusla ağaç formunda hazırlanan, siyah saksıda yılbaşı aranjmanı."
   },
   {
-   "id": "lz18",
+   "id": "u18",
    "name": "Turuncu Lale ve Protea Buketi",
    "type": "buket",
    "occasions": [
@@ -416,7 +416,7 @@ window.LALEZAR_SEED = {
    "description": "Turuncu laleler, iğne yastığı proteaları, yeşil karanfiller ve aspidistra yapraklarıyla hazırlanan enerjik bir buket."
   },
   {
-   "id": "lz19",
+   "id": "u19",
    "name": "Pembe Orkide ve Güllü Aranjman",
    "type": "vazoda-aranjman",
    "occasions": [
@@ -436,7 +436,7 @@ window.LALEZAR_SEED = {
    "description": "Pembe seramik saksıda pembe falanopsis orkide, pembe güller, ortanca ve lisyantuslarla hazırlanan zarif bir aranjman."
   },
   {
-   "id": "lz20",
+   "id": "u20",
    "name": "Kral Protea ve Antoryum Aranjmanı",
    "type": "vazoda-aranjman",
    "occasions": [
