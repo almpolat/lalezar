@@ -148,19 +148,23 @@
   const Favs = {
     list() { try { return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch (e) { return []; } },
     has(id) { return Favs.list().includes(id); },
+    save(l) { try { localStorage.setItem(FAV_KEY, JSON.stringify(l)); } catch (e) {} Favs.badge(); },
     toggle(id) {
       let l = Favs.list(); l = l.includes(id) ? l.filter((x) => x !== id) : [...l, id];
-      try { localStorage.setItem(FAV_KEY, JSON.stringify(l)); } catch (e) {}
+      Favs.save(l);
       return l.includes(id);
-    }
+    },
+    badge() { document.querySelectorAll("[data-fav-count]").forEach((el) => { el.textContent = Favs.list().length; }); }
   };
   const heartSvg = `<svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></svg>`;
   // Kalp ikonları tüm sayfalarda tek yerden dinlenir
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-fav]"); if (!b) return;
     e.preventDefault();
-    const on = Favs.toggle(b.dataset.fav);
-    b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on);
+    const id = b.dataset.fav, on = Favs.toggle(id);
+    // Aynı ürünün sayfadaki tüm kalplerini eşitle, favoriler sayfası dinlesin
+    document.querySelectorAll("[data-fav]").forEach((x) => { if (x.dataset.fav === id) { x.classList.toggle("is-on", on); x.setAttribute("aria-pressed", on); } });
+    document.dispatchEvent(new CustomEvent("lz:favs", { detail: { id, on } }));
   });
 
   function productCard(p) {
@@ -229,9 +233,10 @@
             <a href="tel:${S.phoneTel}" class="hidden xl:flex items-center gap-2 text-[13px] tracking-wide text-ink/70 hover:text-ink">${icon.phone}${esc(S.phone)}</a>
           </div>
           <a href="index.html" aria-label="${esc(S.name)} ana sayfa"><img src="assets/logo.png" alt="${esc(S.name)}" class="h-11 sm:h-[54px] w-auto"></a>
-          <div class="flex items-center justify-end gap-4 sm:gap-5">
+          <div class="flex items-center justify-end gap-3.5 sm:gap-5">
             <button id="search-btn-m" class="lg:hidden" aria-label="Ara">${icon.search}</button>
             <a href="${waLink("Merhaba, çiçek siparişi vermek istiyorum.")}" target="_blank" rel="noopener" class="hidden sm:block hover:text-orange" aria-label="WhatsApp">${icon.wa}</a>
+            <a href="favoriler.html" class="relative flex items-center gap-2 hover:text-orange" aria-label="Favorilerim">${heartSvg.replace('stroke="currentColor"', 'fill="none" stroke="currentColor"')}<span class="text-[13px] whitespace-nowrap hidden sm:inline">(<span data-fav-count>0</span>)</span><span data-fav-count class="sm:hidden absolute -top-1.5 -right-2 text-[10px] leading-none">0</span></a>
             <a href="sepet.html" class="flex items-center gap-2 hover:text-orange" aria-label="Sepet">${icon.bag}<span class="text-[13px] whitespace-nowrap"><span class="hidden sm:inline">Sepet </span>(<span data-cart-count>0</span>)</span></a>
           </div>
         </div>
@@ -261,7 +266,8 @@
             ${cats.types.map((c) => `<a href="kategori.html?tur=${c.slug}" class="drawer-link">${esc(c.name)}</a>`).join("")}
             <p class="text-[11px] text-ink/50 mt-6 mb-1">Gönderim sebebi</p>
             ${cats.occasions.map((c) => `<a href="kategori.html?sebep=${c.slug}" class="drawer-link">${esc(c.name)}</a>`).join("")}
-            <a href="index.html#magaza" class="drawer-link mt-4">Mağazamız</a>
+            <a href="favoriler.html" class="drawer-link mt-4">Favorilerim (<span data-fav-count>0</span>)</a>
+            <a href="index.html#magaza" class="drawer-link">Mağazamız</a>
           </div>
           <div class="px-6 pb-8 text-sm space-y-2"><a href="tel:${S.phoneTel}" class="flex items-center gap-2">${icon.phone}${esc(S.phone)}</a><a href="https://www.instagram.com/${esc(S.instagram)}/" class="flex items-center gap-2">${icon.ig}@${esc(S.instagram)}</a></div>
         </aside>
@@ -272,7 +278,7 @@
     const openSearch = () => { sp.classList.remove("hidden"); sp.querySelector("input").focus(); };
     $("#search-btn").onclick = openSearch; $("#search-btn-m").onclick = openSearch;
     $("#search-close").onclick = () => sp.classList.add("hidden");
-    Cart.badge();
+    Cart.badge(); Favs.badge();
     startCountdown();
   }
 
@@ -351,7 +357,7 @@
       <a href="${waLink("Merhaba, çiçek siparişi vermek istiyorum.")}" target="_blank" rel="noopener" class="fixed right-5 bottom-5 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-lg hover:scale-105 transition-transform" aria-label="WhatsApp'tan sipariş ver">${icon.wa.replace('width="20" height="20"', 'width="28" height="28"')}</a>`;
   }
 
-  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, inType, sameDay, addDays, toMin, cutoffText, Cart, Favs, toast, renderHeader, renderFooter, icon, mix };
+  window.UI = { $, esc, money, param, slugify, waLink, art, productImage, productCard, bindAddButtons, inType, heartSvg, sameDay, addDays, toMin, cutoffText, Cart, Favs, toast, renderHeader, renderFooter, icon, mix };
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-cutoff]").forEach((el) => (el.textContent = cutoffText()));
     renderHeader(); renderFooter();

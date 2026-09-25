@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <title>Favorilerim | Lalezar Çiçekçilik</title>
+  <meta name="robots" content="noindex">
+</head>
+<body>
+<div id="site-header"></div>
+<main class="max-w-[1400px] mx-auto px-4 sm:px-8 pt-12">
+  <h1 class="font-display text-5xl text-center">Favorilerim</h1>
+  <div id="favs" class="mt-12"></div>
+</main>
+<div id="site-footer"></div>
+<script>
+(async () => {
+  const { productCard, bindAddButtons, Favs } = UI;
+  const box = document.getElementById("favs");
+  const products = await Store.listProducts();
+  const byId = Object.fromEntries(products.filter((p) => p.active !== false).map((p) => [p.id, p]));
+
+  // Silinmiş ya da pasif ürünler favorilerden temizlenir
+  const ids = Favs.list(), okIds = ids.filter((id) => byId[id]);
+  if (okIds.length !== ids.length) Favs.save(okIds);
+
+  function render() {
+    const list = Favs.list().map((id) => byId[id]).filter(Boolean);
+    if (!list.length) {
+      box.innerHTML = `<div class="text-center py-10"><p class="text-lg text-ink/70">Henüz favori ürününüz yok.</p><a href="kategori.html" class="btn btn-dark mt-8">Çiçekleri keşfet</a></div>`;
+      return;
+    }
+    box.innerHTML = `<p class="text-center text-ink/60 -mt-6 mb-10">${list.length} ürün</p>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12">${list.map(productCard).join("")}</div>`;
+    bindAddButtons(box, list);
+  }
+  // Kalbe basınca favoriden çıkan ürün listeden anında kalkar
+  document.addEventListener("lz:favs", render);
+  render();
+})();
+</script>
+</body>
+</html>

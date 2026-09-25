@@ -54,6 +54,7 @@
             <button id="plus" class="w-12 h-full text-lg" aria-label="Artır">+</button>
           </div>
           <button id="add" class="btn btn-outline flex-1">Sepete Ekle</button>
+          <button type="button" data-fav="${esc(p.id)}" class="fav-btn w-[54px] h-[54px] shrink-0 grid place-items-center border border-ink/30 ${UI.Favs.has(p.id) ? "is-on" : ""}" aria-pressed="${UI.Favs.has(p.id)}" aria-label="Favorilere ekle">${UI.heartSvg}</button>
         </div>
         <button id="buy" class="btn btn-dark w-full mt-3">Hemen Satın Al</button>
         <a href="${waLink(`Merhaba, "${p.name}" hakkında bilgi almak istiyorum.`)}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 mt-4 text-sm underline underline-offset-4">${UI.icon.wa} WhatsApp'tan bilgi al</a>
