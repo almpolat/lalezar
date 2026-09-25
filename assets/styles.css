@@ -1,0 +1,56 @@
+html { scroll-behavior: smooth; }
+body { font-family: Jost, system-ui, sans-serif; color: #1E1E1E; background: #fff; -webkit-font-smoothing: antialiased; }
+.font-display { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; letter-spacing: .005em; }
+:focus-visible { outline: 2px solid #E8850A; outline-offset: 2px; }
+
+/* Üst şerit kayan yazı */
+.marquee { animation: marquee 40s linear infinite; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Menü */
+.nav-link { position: relative; padding: 6px 0; }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transition: transform .3s; }
+.nav-link:hover::after { transform: scaleX(1); }
+.mega { display: none; }
+.mega-parent:hover .mega, .mega-parent:focus-within .mega { display: block; }
+.menu-title { font-family: "Cormorant Garamond", Georgia, serif; font-size: 22px; margin-bottom: 12px; }
+.menu-item { display: block; padding: 5px 0; color: rgba(30,30,30,.75); }
+.menu-item:hover { color: #1E1E1E; text-decoration: underline; text-underline-offset: 4px; }
+.drawer-link { display: block; padding: 12px 0; border-bottom: 1px solid #E6E3DE; }
+.footer-title { color: #fff; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 18px; }
+.footer-link { display: block; padding: 4px 0; }
+.footer-link:hover { color: #fff; }
+
+/* Butonlar */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 32px; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; transition: background .25s, color .25s, border-color .25s; border: 1px solid transparent; }
+.btn-dark { background: #1E1E1E; color: #fff; }
+.btn-dark:hover { background: #E8850A; }
+.btn-outline { border-color: #1E1E1E; color: #1E1E1E; background: transparent; }
+.btn-outline:hover { background: #1E1E1E; color: #fff; }
+.btn-white { border-color: #fff; color: #fff; }
+.btn-white:hover { background: #fff; color: #1E1E1E; }
+
+/* Form */
+.input { width: 100%; border: 1px solid #D6D2CB; padding: 13px 14px; font-size: 15px; background: #fff; }
+.input:focus { outline: none; border-color: #1E1E1E; }
+.label { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; color: rgba(30,30,30,.75); }
+
+/* Başlıklar */
+.section-title { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(30px, 4vw, 44px); line-height: 1.1; text-align: center; }
+.section-sub { text-align: center; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: rgba(30,30,30,.55); margin-bottom: 10px; }
+
+/* Slider */
+.slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+.slide.on { opacity: 1; z-index: 1; }
+
+details summary { list-style: none; cursor: pointer; }
+details summary::-webkit-details-marker { display: none; }
+details[open] .plus { transform: rotate(45deg); }
+.plus { transition: transform .25s; }
+.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { scrollbar-width: none; }
+@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } .slide { transition: none; } html { scroll-behavior: auto; } }
+
+.btn-primary { background: #1E1E1E; color: #fff; }
+.btn-primary:hover { background: #E8850A; }
+.btn-ghost { border-color: #1E1E1E; }
+.btn-ghost:hover { background: #1E1E1E; color: #fff; }
