@@ -57,6 +57,105 @@ window.LALEZAR_SEED = {
  },
  "products": [
   {
+   "id": "lz01",
+   "name": "Buda Vazoda Pastel Aranjman",
+   "type": "vazoda-aranjman",
+   "occasions": [
+    "yeni-is",
+    "acilis",
+    "dogum-gunu"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/buda-vazoda-pembe-mavi-aranjman.jpg",
+   "art": [
+    "#6FA8DC",
+    "#F4A7B9"
+   ],
+   "description": "Turkuaz seramik Buda vazoda; pembe alstroemerya ve lisyantuslar, mavi krizantemler ve mor vanda orkideyle hazırlanan gösterişli bir aranjman. Yeni bir mekâna huzur katan kalıcı bir hediye."
+  },
+  {
+   "id": "lz02",
+   "name": "Pembe Kadife Kutu",
+   "type": "kutuda-cicek",
+   "occasions": [
+    "dogum-gunu",
+    "sevgiliye",
+    "yeni-bebek"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/pembe-kadife-kutuda-cicekler.jpg",
+   "art": [
+    "#F4A7B9",
+    "#FFFFFF"
+   ],
+   "description": "Pembe kadife kutuda pembe lisyantus, mini güller, pembe gül ve beyaz krizantem. Yumuşak tonlarıyla doğum günleri ve yeni bebek kutlamaları için zarif bir seçim."
+  },
+  {
+   "id": "lz03",
+   "name": "Pembe Antoryum Buketi",
+   "type": "buket",
+   "occasions": [
+    "dogum-gunu",
+    "tesekkur",
+    "gecmis-olsun"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/pembe-antoryum-buketi.jpg",
+   "art": [
+    "#F4A7B9",
+    "#FFFFFF"
+   ],
+   "description": "Pembe antoryumlar, pembe krizantem ve karanfiller, beyaz lisyantus ve okaliptüsle hazırlanan, pembe kâğıda sarılı modern bir buket."
+  },
+  {
+   "id": "lz04",
+   "name": "Pembe Şakayık Buketi",
+   "type": "buket",
+   "occasions": [
+    "sevgiliye",
+    "dogum-gunu",
+    "tesekkur"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/pembe-sakayik-buketi.jpg",
+   "art": [
+    "#E88BA8",
+    "#FFFFFF"
+   ],
+   "description": "Mevsiminde açan pembe şakayıklardan bol ve dolgun bir buket. Tomurcukları gün geçtikçe açılarak evinizi şenlendirir."
+  },
+  {
+   "id": "lz05",
+   "name": "Siyah Kutuda Kırmızı Güller",
+   "type": "kutuda-cicek",
+   "occasions": [
+    "sevgiliye",
+    "dogum-gunu"
+   ],
+   "price": 0,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/siyah-kutuda-kirmizi-guller.jpg",
+   "art": [
+    "#C8102E",
+    "#FFFFFF"
+   ],
+   "description": "Lalezar logolu siyah kadife kutuda, siyah kurdeleyle tamamlanan kırmızı güller. Sevgiliye klasik ve şık bir jest."
+  },
+  {
    "id": "p01",
    "name": "Bağdat Buketi",
    "type": "buket",
