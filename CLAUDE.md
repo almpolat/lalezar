@@ -7,6 +7,7 @@ Statik site: HTML + Tailwind CDN + vanilla JS. GitHub Pages'te, main branch, roo
 - js/store.js: veri katmanı, tüm veri buradan okunur/yazılır
 - js/seed.js: örnek ürünler, kategoriler, slider
 - js/ui.js: header, footer, ürün kartı, sepet
+- js/theme.js: Tailwind renk ve font ayarları
 - assets/styles.css: ortak stiller
 
 ## Kurallar
