@@ -65,7 +65,7 @@ window.LALEZAR_SEED = {
     "acilis",
     "dogum-gunu"
    ],
-   "price": 0,
+   "price": 5450,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -85,7 +85,7 @@ window.LALEZAR_SEED = {
     "sevgiliye",
     "yeni-bebek"
    ],
-   "price": 0,
+   "price": 3250,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -105,7 +105,7 @@ window.LALEZAR_SEED = {
     "tesekkur",
     "gecmis-olsun"
    ],
-   "price": 0,
+   "price": 2950,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -125,7 +125,7 @@ window.LALEZAR_SEED = {
     "dogum-gunu",
     "tesekkur"
    ],
-   "price": 0,
+   "price": 4750,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -144,7 +144,7 @@ window.LALEZAR_SEED = {
     "sevgiliye",
     "dogum-gunu"
    ],
-   "price": 0,
+   "price": 2450,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -164,7 +164,7 @@ window.LALEZAR_SEED = {
     "yeni-is",
     "tesekkur"
    ],
-   "price": 0,
+   "price": 7950,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -184,7 +184,7 @@ window.LALEZAR_SEED = {
     "yeni-is",
     "acilis"
    ],
-   "price": 0,
+   "price": 2750,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -204,7 +204,7 @@ window.LALEZAR_SEED = {
     "dogum-gunu",
     "yeni-is"
    ],
-   "price": 0,
+   "price": 4250,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -224,7 +224,7 @@ window.LALEZAR_SEED = {
     "tesekkur",
     "yeni-bebek"
    ],
-   "price": 0,
+   "price": 2650,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -244,7 +244,7 @@ window.LALEZAR_SEED = {
     "dogum-gunu",
     "yeni-is"
    ],
-   "price": 0,
+   "price": 9950,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -264,7 +264,7 @@ window.LALEZAR_SEED = {
     "yeni-bebek",
     "tesekkur"
    ],
-   "price": 0,
+   "price": 3450,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -284,7 +284,7 @@ window.LALEZAR_SEED = {
     "yeni-is",
     "dogum-gunu"
    ],
-   "price": 0,
+   "price": 6450,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -304,7 +304,7 @@ window.LALEZAR_SEED = {
     "dogum-gunu",
     "tesekkur"
    ],
-   "price": 0,
+   "price": 3250,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -324,7 +324,7 @@ window.LALEZAR_SEED = {
     "dogum-gunu",
     "tesekkur"
    ],
-   "price": 0,
+   "price": 3450,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -344,7 +344,7 @@ window.LALEZAR_SEED = {
     "gecmis-olsun",
     "yeni-is"
    ],
-   "price": 0,
+   "price": 4950,
    "oldPrice": 0,
    "featured": true,
    "active": true,
@@ -354,6 +354,106 @@ window.LALEZAR_SEED = {
     "#F7C6A3"
    ],
    "description": "Yeşil seramik saksıda lila krizantem ve güller, şeftali karanfiller, vanda orkideler, mor kala ve sarkan amarantla hazırlanan pastel tonlarda bir aranjman."
+  },
+  {
+   "id": "lz16",
+   "name": "Kozalaklı Yılbaşı Kutusu",
+   "type": "kutuda-cicek",
+   "occasions": [
+    "tesekkur",
+    "yeni-is",
+    "acilis"
+   ],
+   "price": 2450,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/kozalakli-yilbasi-kutusu.jpg",
+   "art": [
+    "#C8102E",
+    "#C9A227"
+   ],
+   "description": "Kahve tonlu kutuda altın yaldızlı kozalaklar, magnolya yaprakları, lotus kapsülü, kırmızı kokina ve çam dallarıyla hazırlanan yılbaşı tasarımı."
+  },
+  {
+   "id": "lz17",
+   "name": "Kozalaklı Yılbaşı Ağacı",
+   "type": "vazoda-aranjman",
+   "occasions": [
+    "tesekkur",
+    "yeni-is",
+    "acilis"
+   ],
+   "price": 2950,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/kozalakli-yilbasi-agaci.jpg",
+   "art": [
+    "#2E6B3A",
+    "#C8102E"
+   ],
+   "description": "Taze çam dalları, kozalaklar, kırmızı kokina ve kırmızı asparagusla ağaç formunda hazırlanan, siyah saksıda yılbaşı aranjmanı."
+  },
+  {
+   "id": "lz18",
+   "name": "Turuncu Lale ve Protea Buketi",
+   "type": "buket",
+   "occasions": [
+    "dogum-gunu",
+    "tesekkur",
+    "yeni-is"
+   ],
+   "price": 3250,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/turuncu-lale-protea-buketi.jpg",
+   "art": [
+    "#E8850A",
+    "#8DB600"
+   ],
+   "description": "Turuncu laleler, iğne yastığı proteaları, yeşil karanfiller ve aspidistra yapraklarıyla hazırlanan enerjik bir buket."
+  },
+  {
+   "id": "lz19",
+   "name": "Pembe Orkide ve Güllü Aranjman",
+   "type": "vazoda-aranjman",
+   "occasions": [
+    "dogum-gunu",
+    "yeni-bebek",
+    "sevgiliye"
+   ],
+   "price": 5250,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/pembe-orkide-gullu-aranjman.jpg",
+   "art": [
+    "#F4A7B9",
+    "#FFFFFF"
+   ],
+   "description": "Pembe seramik saksıda pembe falanopsis orkide, pembe güller, ortanca ve lisyantuslarla hazırlanan zarif bir aranjman."
+  },
+  {
+   "id": "lz20",
+   "name": "Kral Protea ve Antoryum Aranjmanı",
+   "type": "vazoda-aranjman",
+   "occasions": [
+    "acilis",
+    "yeni-is",
+    "dogum-gunu"
+   ],
+   "price": 5750,
+   "oldPrice": 0,
+   "featured": true,
+   "active": true,
+   "image": "assets/urunler/kral-protea-antoryum-aranjmani.jpg",
+   "art": [
+    "#D7263D",
+    "#C9A0C8"
+   ],
+   "description": "Beyaz seramik saksıda kral protea, kırmızı antoryumlar, pembe güller, sukulentler ve sarkan amarantla hazırlanan iddialı bir aranjman."
   }
  ],
  "heroSlides": [
